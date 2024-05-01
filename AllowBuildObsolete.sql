@@ -1,0 +1,1 @@
+UPDATE Units SET MandatoryObsoleteTech = NULL, MandatoryObsoleteCivic = NULL, ObsoleteTech = NULL, ObsoleteCivic = Null
