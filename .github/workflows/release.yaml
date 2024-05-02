@@ -1,0 +1,46 @@
+name: Create Release Artifact
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger the workflow when a commit is tagged with a tag beginning in 'v'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Compute build tag
+        id: tag
+        run: |
+          EVENT="${{ github.event_name }}"
+          TAG_INPUT="${{ inputs.tag }}"
+          REF="${{ github.ref_name }}"
+          SHA="$(git rev-parse --short=7 ${{ github.sha }})"
+
+          if [ "${EVENT}" = "workflow_dispatch" ]; then
+            echo "tag=${TAG_INPUT:-${SHA}}"  >> $GITHUB_OUTPUT
+          elif [ "${EVENT}" = "push" ]; then
+            echo "tag=${REF}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${SHA}" >> $GITHUB_OUTPUT
+          fi
+      - name: Zip repository contents
+        run: |
+          version=$(git describe --tags --abbrev=0)
+          zip -r "ap-civ-${{ steps.tag.outputs.tag }}version.zip" .
+      - name: Publish release artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: "ap-civ-${{ steps.tag.outputs.tag }}version.zip"
+      - uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          name: ${{ github.ref_name }}
+          prerelease: ${{ contains(github.ref_name, '-rc') }}
+          draft: true
+          generate_release_notes: true
+          files: "ap-civ-${{ steps.tag.outputs.tag }}version.zip"
