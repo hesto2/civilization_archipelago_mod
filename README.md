@@ -3,7 +3,7 @@
 This project contains the base files needed in order to run Civilization VI with the [Archipelago Randomizer](https://archipelago.gg).
 
 ### Usage
-1. Click the green "Code" button in the github user interface and then "Download as Zip".
+1. Download the latest release of the mod from [github](https://github.com/hesto2/civilization_archipelago_mod/releases).
 
 2. Extract the zip file into a separate folder. This will be referred to as the folder containing the mod.
 
