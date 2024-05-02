@@ -1,8 +1,10 @@
 name: Create Release Artifact
-
+permissions:
+  contents: write
 on:
   push:
-    tags: [ "v*" ]
+    tags:
+      - v*
   workflow_dispatch:
     inputs:
       tag:
