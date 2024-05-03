@@ -23,7 +23,7 @@
     <File>TechTreeNode.xml</File>
     <File>ArchipelagoRunner.lua</File>
     <File>ArchipelagoIcons.xml</File>
-    <File>AllowBuildObsolete.sql</File>
+    <File>ArchipelagoDBOverrides.sql</File>
     <File>GovernmentScreen.lua</File>
     <File>ActionPanel.lua</File>
     <File>ProductionPanel.lua</File>
@@ -44,9 +44,11 @@
 
       <File>NewPrereqs.xml</File>
     </UpdateDatabase>
-    <UpdateDatabase id="ArchipelagoObsoleteUnits">
-      <File>AllowBuildObsolete.sql</File>
-
+    <UpdateDatabase id="ArchipelagoDB">
+    <Properties>
+      <LoadOrder>99999</LoadOrder>
+    </Properties>
+      <File>ArchipelagoDBOverrides.sql</File>
     </UpdateDatabase>
     <ImportFiles id="ArchipelagoReplacers">
       <Properties>
