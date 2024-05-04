@@ -28,6 +28,11 @@ function NotifyReceivedItem(item, index)
         "You have received " .. item.Name .. (item.Sender and " from " .. item.Sender or ""), 0, index) -- 0/index are techincally x/y coords, but if they aren't unique then it won't stack the notifications
 end
 
+function NotifyUnitDeathLink(location, unitName, message)
+    NotificationManager:SendNotification(NotificationTypes.USER_DEFINED_3,
+        "Your " .. unitName .. " was killed by a Death Link", message, location.x, location.y)
+end
+
 function GetCheckedLocations()
     print("START GetCheckedLocations")
     locations = {}
@@ -162,6 +167,14 @@ function ClientGetVictory()
     return CLIENT_PREFIX .. victory .. CLIENT_POSTFIX
 end
 
+-- CLIENT FUNCTION
+function ClientGetDeathLink()
+    deathLink = Game.GetProperty("DeathLink") or "false"
+    -- Death link stores a string containing the name of the unit that killed the player's unit
+    Game.SetProperty("DeathLink", "false")
+    return CLIENT_PREFIX .. deathLink .. CLIENT_POSTFIX
+end
+
 function OnToggleTech(_, params)
     -- Responds to player clicking unlocked items in the UI to disable them, useful for building obsolete units, id is sent in as index so we don't need to modify it
     print("START ToggleTech")
@@ -197,14 +210,52 @@ function OnToggleTech(_, params)
     print("END ToggleTech")
 end
 
+-- CLIENT FUNCTION
+function KillUnit(message)
+    pUnits = HUMAN_PLAYER:GetUnits()
+    count = pUnits:GetCount()
+    if count == 0 then
+        return
+    end
+    for index, pUnit in pUnits:Members() do
+        location = pUnit:GetLocation()
+        name = Locale.Lookup(pUnit:GetName())
+        UnitManager.Kill(pUnit)
+        NotifyUnitDeathLink(location, name, message)
+        return
+    end
+
+end
+
+function OnUnitKilledInCombat(playerID, unitID, killerPlayerID, killerUnitID)
+    print("START ON UNIT KILLED")
+    if playerID == HUMAN_PLAYER:GetID() then
+        -- unit = UnitManager.GetUnit(playerID, unitID)
+        -- print(unit:GetName())
+        -- unitName = Locale.Lookup(unit:GetName())
+        -- unit is often nil before it can be looked up here
+
+        -- This is here in case something goes wrong with the lookup
+        Game.SetProperty("DeathLink", unitName .. ",Natural Causes")
+
+        if killerPlayerID == -1 or killerUnitID == -1 then
+            return
+        end
+        killerUnit = UnitManager.GetUnit(killerPlayerID, killerUnitID)
+        killerUnitName = Locale.Lookup(killerUnit:GetName())
+
+        Game.SetProperty("DeathLink", killerUnitName)
+    end
+end
+
 function Init()
     print("Running Main")
-    print("Adding turn begin")
     -- Events to listen for
     Events.TurnBegin.Add(OnTurnBegin);
     Events.ResearchCompleted.Add(OnResearchComplete)
     Events.CivicCompleted.Add(OnCivicComplete)
     Events.TeamVictory.Add(OnTeamVictory)
+    Events.UnitKilledInCombat.Add(OnUnitKilledInCombat)
 
     -- Initialize the techs
     TECHS = DB.Query("Select * FROM Technologies")
@@ -260,7 +311,9 @@ Game.HandleReceiveItem = HandleReceiveItem
 Game.GetUnsentCheckedLocations = GetUnsentCheckedLocations
 Game.IsInGame = IsInGame
 Game.ClientGetLastReceivedIndex = ClientGetLastReceivedIndex
+Game.ClientGetDeathLink = ClientGetDeathLink
 Game.Resync = Resync
 Game.ClientGetVictory = ClientGetVictory
+Game.KillUnit = KillUnit
 GameEvents.OnToggleTech.Add(OnToggleTech);
 
