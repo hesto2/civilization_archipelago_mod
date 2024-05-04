@@ -2,5 +2,6 @@
   <IconDefinitions>
     <Replace Name="ICON_NOTIFICATION_USER_DEFINED_2" Atlas="ICON_ATLAS_NOTIFICATIONS" Index="0" />
     <Replace Name="ICON_NOTIFICATION_USER_DEFINED_3" Atlas="ICON_ATLAS_NOTIFICATIONS" Index="96" />
+    <Replace Name="ICON_NOTIFICATION_USER_DEFINED_4" Atlas="ICON_ATLAS_NOTIFICATIONS" Index="96" />
   </IconDefinitions>
 </GameInfo>

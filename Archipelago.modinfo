@@ -10,12 +10,16 @@
   </Properties>
 
   <Files>
+    <!-- Custom files -->
     <File>NewItems.xml</File>
     <File>NewPrereqs.xml</File>
     <File>ArchipelagoRunner.lua</File>
     <File>ArchipelagoIcons.xml</File>
     <File>ArchipelagoDBOverrides.sql</File>
+    <File>DeathLinkHandlers.lua</File>
+    <File>UIHandlers.lua</File>
 
+    <!-- Replacers -->
     <File>Replacers/ResearchChooser.lua</File>
     <File>Replacers/ResearchChooser.xml</File>
     <File>Replacers/CivicsChooser.lua</File>
@@ -28,6 +32,7 @@
     <File>Replacers/GovernmentScreen.lua</File>
     <File>Replacers/ActionPanel.lua</File>
 
+    <!-- Icons -->
     <File>Icons/NewTech128.dds</File>
     <File>Icons/NewTech160.dds</File>
     <File>Icons/NewTech30.dds</File>
@@ -126,12 +131,19 @@
 
     <UpdateIcons id="APIcon">
       <File>Icons/NewTech_Icons.xml</File>
+      <File>ArchipelagoIcons.xml</File>
     </UpdateIcons>
 
     <!-- Handle new scripts -->
 
-    <AddGameplayScripts id="ArchipelagoScripts">
+    <AddGameplayScripts id="ArchipelagoRunner">
       <File>ArchipelagoRunner.lua</File>
+    </AddGameplayScripts>
+    <AddGameplayScripts id="ArchipelagoDeathLinkHandlers">
+      <File>DeathLinkHandlers.lua</File>
+    </AddGameplayScripts>
+    <AddGameplayScripts id="ArchipelagoUIHandlers">
+      <File>UIHandlers.lua</File>
     </AddGameplayScripts>
   </InGameActions>
 </Mod>
