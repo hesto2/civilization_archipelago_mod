@@ -12,21 +12,22 @@
   <Files>
     <File>NewItems.xml</File>
     <File>NewPrereqs.xml</File>
-    <File>ResearchChooser.lua</File>
-    <File>ResearchChooser.xml</File>
-    <File>CivicsChooser.lua</File>
-    <File>CivicsChooser.xml</File>
-    <File>TechTree.lua</File>
-    <File>TechTree.xml</File>
-    <File>CivicsTree.lua</File>
-    <File>CivicsTree.xml</File>
-    <File>TechTreeNode.xml</File>
     <File>ArchipelagoRunner.lua</File>
     <File>ArchipelagoIcons.xml</File>
     <File>ArchipelagoDBOverrides.sql</File>
-    <File>GovernmentScreen.lua</File>
-    <File>ActionPanel.lua</File>
-    <File>ProductionPanel.lua</File>
+
+    <File>Replacers/ResearchChooser.lua</File>
+    <File>Replacers/ResearchChooser.xml</File>
+    <File>Replacers/CivicsChooser.lua</File>
+    <File>Replacers/CivicsChooser.xml</File>
+    <File>Replacers/TechTree.lua</File>
+    <File>Replacers/TechTree.xml</File>
+    <File>Replacers/CivicsTree.lua</File>
+    <File>Replacers/CivicsTree.xml</File>
+    <File>Replacers/TechTreeNode.xml</File>
+    <File>Replacers/GovernmentScreen.lua</File>
+    <File>Replacers/ActionPanel.lua</File>
+
     <File>Icons/NewTech128.dds</File>
     <File>Icons/NewTech160.dds</File>
     <File>Icons/NewTech30.dds</File>
@@ -44,32 +45,77 @@
 
       <File>NewPrereqs.xml</File>
     </UpdateDatabase>
+
     <UpdateDatabase id="ArchipelagoDB">
-    <Properties>
-      <LoadOrder>99999</LoadOrder>
-    </Properties>
+      <Properties>
+        <LoadOrder>99999</LoadOrder>
+      </Properties>
       <File>ArchipelagoDBOverrides.sql</File>
     </UpdateDatabase>
+    <!-- Handle replacers -->
+
     <ImportFiles id="ArchipelagoReplacers">
       <Properties>
         <LoadOrder>150000</LoadOrder>
       </Properties>
-      <File>ResearchChooser.lua</File>
-      <File>ResearchChooser.xml</File>
-      <File>CivicsChooser.lua</File>
-      <File>CivicsChooser.xml</File>
-
-      <File>TechTree.lua</File>
-      <File>TechTree.xml</File>
-      <File>CivicsTree.lua</File>
-      <File>CivicsTree.xml</File>
-      <File>TechTreeNode.xml</File>
-
-      <File>GovernmentScreen.lua</File>
-      <File>ActionPanel.lua</File>
-      <File>ProductionPanel.lua</File>
-
+      <File>Replacers/ResearchChooser.lua</File>
+      <File>Replacers/ResearchChooser.xml</File>
+      <File>Replacers/CivicsChooser.lua</File>
+      <File>Replacers/CivicsChooser.xml</File>
+      <File>Replacers/TechTree.lua</File>
+      <File>Replacers/TechTree.xml</File>
+      <File>Replacers/CivicsTree.lua</File>
+      <File>Replacers/CivicsTree.xml</File>
+      <File>Replacers/TechTreeNode.xml</File>
+      <File>Replacers/GovernmentScreen.lua</File>
+      <File>Replacers/ActionPanel.lua</File>
     </ImportFiles>
+
+    <ReplaceUIScript id="Archipelago_ResearchChooser">
+      <Properties>
+        <LoadOrder>150000</LoadOrder>
+        <LuaContext>ResearchChooser</LuaContext>
+        <LuaReplace>Replacers/ResearchChooser.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_TechTree">
+      <Properties>
+        <LoadOrder>150001</LoadOrder>
+        <LuaContext>TechTree</LuaContext>
+        <LuaReplace>Replacers/TechTree.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_ResearchChooser">
+      <Properties>
+        <LoadOrder>150002</LoadOrder>
+        <LuaContext>CivicsChooser</LuaContext>
+        <LuaReplace>Replacers/CivicsChooser.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_CivicsTree">
+      <Properties>
+        <LoadOrder>150003</LoadOrder>
+        <LuaContext>CivicsTree</LuaContext>
+        <LuaReplace>Replacers/CivicsTree.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_GovernmentScreen">
+      <Properties>
+        <LoadOrder>150004</LoadOrder>
+        <LuaContext>GovernmentScreen</LuaContext>
+        <LuaReplace>Replacers/GovernmentScreen.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_ActionPanel">
+      <Properties>
+        <LoadOrder>-101</LoadOrder>
+        <LuaContext>ActionPanel</LuaContext>
+        <LuaReplace>Replacers/ActionPanel.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+
+    <!-- Handle Icons -->
+
     <ImportFiles id="ImportIcons">
       <File>Icons/NewTech128.dds</File>
       <File>Icons/NewTech160.dds</File>
@@ -77,63 +123,15 @@
       <File>Icons/NewTech38.dds</File>
       <File>Icons/NewTech30.dds</File>
     </ImportFiles>
-    <ReplaceUIScript id="Archipelago_ResearchChooser">
-      <Properties>
-        <LoadOrder>150000</LoadOrder>
-        <LuaContext>ResearchChooser</LuaContext>
-        <LuaReplace>ResearchChooser.lua</LuaReplace>
-      </Properties>
-    </ReplaceUIScript>
-    <ReplaceUIScript id="Archipelago_TechTree">
-      <Properties>
-        <LoadOrder>150001</LoadOrder>
-        <LuaContext>TechTree</LuaContext>
-        <LuaReplace>TechTree.lua</LuaReplace>
-      </Properties>
-    </ReplaceUIScript>
-    <ReplaceUIScript id="Archipelago_ResearchChooser">
-      <Properties>
-        <LoadOrder>150002</LoadOrder>
-        <LuaContext>CivicsChooser</LuaContext>
-        <LuaReplace>CivicsChooser.lua</LuaReplace>
-      </Properties>
-    </ReplaceUIScript>
-    <ReplaceUIScript id="Archipelago_CivicsTree">
-      <Properties>
-        <LoadOrder>150003</LoadOrder>
-        <LuaContext>CivicsTree</LuaContext>
-        <LuaReplace>CivicsTree.lua</LuaReplace>
-      </Properties>
-    </ReplaceUIScript>
-    <ReplaceUIScript id="Archipelago_GovernmentScreen">
-      <Properties>
-        <LoadOrder>150004</LoadOrder>
-        <LuaContext>GovernmentScreen</LuaContext>
-        <LuaReplace>GovernmentScreen.lua</LuaReplace>
-      </Properties>
-    </ReplaceUIScript>
-    <ReplaceUIScript id="Archipelago_ActionPanel">
-      <Properties>
-        <LoadOrder>-101</LoadOrder>
-        <LuaContext>ActionPanel</LuaContext>
-        <LuaReplace>ActionPanel.lua</LuaReplace>
-      </Properties>
-    </ReplaceUIScript>
-    <ReplaceUIScript id="Archipelago_ProductionPanel">
-      <Properties>
-        <LoadOrder>-102</LoadOrder>
-        <LuaContext>ProductionPanel</LuaContext>
-        <LuaReplace>ProductionPanel.lua</LuaReplace>
-      </Properties>
-    </ReplaceUIScript>
-    <AddGameplayScripts id="ArchipelagoScripts">
-      <File>ArchipelagoRunner.lua</File>
-    </AddGameplayScripts>
-    <UpdateIcons id="NotificationIcon">
-      <File>ArchipelagoIcons.xml</File>
-    </UpdateIcons>
+
     <UpdateIcons id="APIcon">
       <File>Icons/NewTech_Icons.xml</File>
     </UpdateIcons>
+
+    <!-- Handle new scripts -->
+
+    <AddGameplayScripts id="ArchipelagoScripts">
+      <File>ArchipelagoRunner.lua</File>
+    </AddGameplayScripts>
   </InGameActions>
 </Mod>
