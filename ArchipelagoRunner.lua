@@ -236,7 +236,7 @@ function OnUnitKilledInCombat(playerID, unitID, killerPlayerID, killerUnitID)
         -- unit is often nil before it can be looked up here
 
         -- This is here in case something goes wrong with the lookup
-        Game.SetProperty("DeathLink", unitName .. ",Natural Cause")
+        Game.SetProperty("DeathLink", "Natural Causes")
 
         if killerPlayerID == -1 or killerUnitID == -1 then
             return
