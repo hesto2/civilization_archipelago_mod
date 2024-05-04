@@ -265,7 +265,6 @@
 <Row Civic="CIVIC_AP54" PrereqCivic="CIVIC_AP49" />
 <Row Civic="CIVIC_AP55" PrereqCivic="CIVIC_AP51" />
 <Row Civic="CIVIC_AP55" PrereqCivic="CIVIC_AP48" />
-<Row Civic="CIVIC_AP50" PrereqCivic="CIVIC_AP50" />
 <Row Civic="CIVIC_AP56" PrereqCivic="CIVIC_AP50" />
 <Row Civic="CIVIC_AP57" PrereqCivic="CIVIC_AP50" />
 <Row Civic="CIVIC_AP58" PrereqCivic="CIVIC_AP50" />
@@ -334,4 +333,3 @@
 <Row Civic="CIVIC_CULTURAL_HEGEMONY" PrereqCivic="CIVIC_BLOCKER" />
 </CivicPrereqs>
   </GameData>
-    
