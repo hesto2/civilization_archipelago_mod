@@ -8,8 +8,8 @@ CIVIC_BLOCKER_ID = -1
 HUMAN_PLAYER = nil
 
 -- Messages read by the client will be started/ended with these
-CLIENT_PREFIX = "APSTART:"
-CLIENT_POSTFIX = ":APEND"
+local CLIENT_PREFIX = "APSTART:"
+local CLIENT_POSTFIX = ":APEND"
 
 -- Sets to true once a turn begins, this is to let the client know that the game can be interacted with now
 IS_IN_GAME = false

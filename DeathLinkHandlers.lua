@@ -1,6 +1,8 @@
 local DL_NOTIFICATION_TYPE = NotificationTypes.USER_DEFINED_3
 local DL_KILL_NOTIFICATION_TYPE = NotificationTypes.USER_DEFINED_4
 local DL_INDEX = 0
+local CLIENT_PREFIX = "APSTART:"
+local CLIENT_POSTFIX = ":APEND"
 
 -- Used to dedupe notifications in the UI, otherwise they won't stack
 function IncrementDeathLinkIndex()
