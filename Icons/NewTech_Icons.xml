@@ -415,6 +415,10 @@
     <Row Name="ICON_CIVIC_AP98_FOW" Index="0" Atlas="NEW_TECH_ICON_ATLAS" />
     <Row Name="ICON_CIVIC_AP99" Index="0" Atlas="NEW_TECH_ICON_ATLAS" />
     <Row Name="ICON_CIVIC_AP99_FOW" Index="0" Atlas="NEW_TECH_ICON_ATLAS" />
+    <Row Name="ICON_CIVIC_BLOCKER" Index="0" Atlas="NEW_TECH_ICON_ATLAS" />
+    <Row Name="ICON_CIVIC_BLOCKER_FOW" Index="0" Atlas="NEW_TECH_ICON_ATLAS" />
+    <Row Name="ICON_TECH_BLOCKER" Index="0" Atlas="NEW_TECH_ICON_ATLAS" />
+    <Row Name="ICON_TECH_BLOCKER_FOW" Index="0" Atlas="NEW_TECH_ICON_ATLAS" />
 
   </IconDefinitions>
 </GameData>

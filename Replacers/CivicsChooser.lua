@@ -95,6 +95,9 @@ function GetData()
 	return kData;
 end
 
+function isAPCivic(name)
+  return string.sub(name, 1, 8) == "CIVIC_AP";
+end
 
 -- ===========================================================================
 --	Populate the list of research options.
@@ -113,19 +116,33 @@ function View( playerID:number, kData:table )
 	end
 
 	table.sort(kData, function(a, b) return Locale.Compare(a.Name, b.Name) == -1; end);
+  shownRows = 0
+  blockerData = nil
 	for i, data in ipairs(kData) do
+    if data.CivicType == "CIVIC_BLOCKER" then
+      blockerData = data
+    end
     -- AP: Tech blocker cannot be selected
-    if data.CivicType ~= "CIVIC_BLOCKER" and string.sub(data.CivicType, 1, 8) == "CIVIC_AP" then
+    if data.CivicType ~= "CIVIC_BLOCKER" and isAPCivic(data.CivicType) then
       if data.IsCurrent or data.IsLastCompleted then
+        if data.IsLastCompleted == false then
+          shownRows = shownRows + 1
+        end
         RealizeCurrentCivic( playerID, data, nil, m_CachedModifiers );
         if (data.Repeatable) then
           AddAvailableCivic( playerID, data );
         end
       else
         AddAvailableCivic( playerID, data );
+        shownRows = shownRows + 1
       end
     end
+
 	end
+
+  if shownRows == 0 then
+    AddAvailableCivic(playerID, blockerData);
+  end
 
 	RealizeSize();
 end

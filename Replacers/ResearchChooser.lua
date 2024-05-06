@@ -98,6 +98,9 @@ function GetData()
 	return kData;
 end
 
+function isAPTech(name)
+  return string.sub(name, 1, 7) == "TECH_AP"
+end
 
 -- ===========================================================================
 --	Populate the list of research options.
@@ -112,20 +115,31 @@ function View( playerID:number, kData:table )
 
 	table.sort(kData, function(a, b) return Locale.Compare(a.Name, b.Name) == -1; end);
 
+  shownRows = 0
+  blockerData = nil
 	for i, data in ipairs(kData) do
+    if data.TechType == "TECH_BLOCKER" then
+      blockerData = data
+    end
     -- AP: Tech blocker cannot be selected
-    if data.TechType ~= "TECH_BLOCKER" and string.sub(data.TechType, 1, 7) == "TECH_AP"
- then
+    if data.TechType ~= "TECH_BLOCKER" and isAPTech(data.TechType) then
       if data.IsCurrent or data.IsLastCompleted then
+        if data.IsLastCompleted == false then
+          shownRows = shownRows + 1
+        end
         RealizeCurrentResearch(playerID, data);
         if data.Repeatable then
           AddAvailableResearch(playerID, data);
         end
       else
+        shownRows = shownRows + 1
         AddAvailableResearch(playerID, data);
       end
     end
 	end
+  if shownRows == 0 then
+    AddAvailableResearch(playerID, blockerData);
+  end
 
 	-- TUTORIAL HACK: Ensure tutorial techs are in a specific position in the list:
 	if m_isTutorial then
