@@ -763,13 +763,10 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
 				local end1, _ = ColumnRowToPixelXY( column, item.UITreeRow );
 				end1 = end1 + SIZE_NODE_X;
 
-        -- if prereqId == "CIVIC_AP3" then
-          line:SetOffsetVal(end1, node.y - SIZE_PATH_HALF);
-          line:SetSizeVal(node.x - end1, SIZE_PATH);
-          line:SetTexture("Controls_TreePathDashEW")
+        line:SetOffsetVal(end1, node.y - SIZE_PATH_HALF);
+        line:SetSizeVal(node.x - end1, SIZE_PATH);
+        line:SetTexture("Controls_TreePathDashEW")
 
-        -- end
-          -- line.SetTexture("Controls_TreePathDashEW");
 
 				-- Directly store the line (not instance) with a key name made up of this type and the prereq's type.
 				g_uiConnectorSets[item.Type..","..prereqId] = {line};
