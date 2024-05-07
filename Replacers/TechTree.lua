@@ -634,6 +634,8 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
 	--		 consistent regardless of the look.
 	local previousRow	:number = 0;
 	local previousColumn:number = 0;
+
+
 	for type,item in pairs(g_kItemDefaults) do
 
 		local node:table = g_uiNodes[item.Type];
@@ -754,7 +756,7 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
 
             line5:SetSizeVal(  LineEndX1 - LineEndX2 - SIZE_PATH_HALF, SIZE_PATH );
             line5:SetOffsetVal(LineEndX2, prevY - SIZE_PATH_HALF);
-            line1:SetTexture("Controls_TreePathDashEW");
+            line5:SetTexture("Controls_TreePathDashEW");
 
             -- Directly store the line (not instance) with a key name made up of this type and the prereq's type.
             g_uiConnectorSets[item.Type..","..prereqId] = {line1,line2,line3,line4,line5};
