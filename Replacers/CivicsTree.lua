@@ -549,6 +549,10 @@ function LayoutNodeGrid()
 		local era		:table  = g_kEras[item.EraType];
 		local columnNum :number = era.PriorColumns + item.Column;
 
+
+    if item.Type == "CIVIC_AP50" then
+
+    end
 		-- Randomize UI tree row (if this game & era does that sort of thing.)
 		if IsEraRandomizingLayout(item.EraType) then
 			item.UITreeRow = GetRandomizedTreeRow(item.UITreeRow);
