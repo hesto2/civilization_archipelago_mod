@@ -97,6 +97,8 @@ g_uiNodes				= {};
 g_uiConnectorSets		= {};
 SHOW_ARCHIPELAGO_TREE = true
 
+linedata = {}
+
 
 
 -- ===========================================================================
@@ -659,8 +661,17 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
 		local node:table = g_uiNodes[item.Type];
 		local scanRow:number = item.UITreeRow;
 
-		for _,prereqId in pairs(item.Prereqs) do
+    local prereqsFiltered = {}
+    for _, prereqId in pairs(item.Prereqs) do
+      if prereqId ~= "CIVIC_BLOCKER" then
+        table.insert(prereqsFiltered, prereqId)
+      end
+      if(item.Type == "CIVIC_CODE_OF_LAWS") then
+        table.insert(prereqsFiltered, "_TREESTART")
+      end
+    end
 
+		for _,prereqId in pairs(prereqsFiltered) do
 			local previousRow	:number = 0;
 			local previousColumn:number = 0;
 			if prereqId == PREREQ_ID_TREE_START then
@@ -741,10 +752,10 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
 
 				line5:SetSizeVal(  LineEndX1 - LineEndX2 - SIZE_PATH_HALF, SIZE_PATH );
 				line5:SetOffsetVal(LineEndX2, LineY2 - SIZE_PATH_HALF);
+        line5:SetTexture("Controls_TreePathDashEW")
 
 				-- Directly store the line (not instance) with a key name made up of this type and the prereq's type.
 				g_uiConnectorSets[item.Type..","..prereqId] = {line1,line2,line3,line4,line5};
-
 			else
 				-- Prereq is on the same row
 				local inst:table = m_kLineIM:GetInstance();
@@ -752,8 +763,13 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
 				local end1, _ = ColumnRowToPixelXY( column, item.UITreeRow );
 				end1 = end1 + SIZE_NODE_X;
 
-				line:SetOffsetVal(end1, node.y - SIZE_PATH_HALF);
-				line:SetSizeVal( node.x - end1, SIZE_PATH);
+        -- if prereqId == "CIVIC_AP3" then
+          line:SetOffsetVal(end1, node.y - SIZE_PATH_HALF);
+          line:SetSizeVal(node.x - end1, SIZE_PATH);
+          line:SetTexture("Controls_TreePathDashEW")
+
+        -- end
+          -- line.SetTexture("Controls_TreePathDashEW");
 
 				-- Directly store the line (not instance) with a key name made up of this type and the prereq's type.
 				g_uiConnectorSets[item.Type..","..prereqId] = {line};
