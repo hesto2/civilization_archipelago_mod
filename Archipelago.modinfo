@@ -34,6 +34,7 @@
     <File>Replacers/ActionPanel_Expansion1.lua</File>
     <File>Replacers/ActionPanel_Expansion2.lua</File>
     <File>Replacers/ActionPanel.xml</File>
+    <File>Replacers/NewTurnPanel_Expansion1.lua</File>
 
     <!-- Icons -->
     <File>Icons/NewTech128.dds</File>
@@ -80,6 +81,7 @@
       <File>Replacers/ActionPanel_Expansion1.lua</File>
       <File>Replacers/ActionPanel_Expansion2.lua</File>
       <File>Replacers/ActionPanel.xml</File>
+      <File>Replacers/NewTurnPanel_Expansion1.lua</File>
     </ImportFiles>
 
     <ReplaceUIScript id="Archipelago_ResearchChooser">
@@ -129,6 +131,12 @@
         <LoadOrder>100</LoadOrder>
         <LuaContext>ActionPanel</LuaContext>
         <LuaReplace>Replacers/ActionPanel_Expansion2.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_NewTurnPanel">
+      <Properties>
+        <LuaContext>NewTurnPanel</LuaContext>
+        <LuaReplace>Replacers/NewTurnPanel_Expansion1.lua</LuaReplace>
       </Properties>
     </ReplaceUIScript>
 

@@ -9,25 +9,25 @@
 		<Container				ID="EraToolTipArea2"			Anchor="R,B" Offset="32,140"	Size="35,30"	/>
 
 		<FlipAnim					ID="TickerAnim"						Anchor="R,B" Offset="0,-14"		Size="52,60" Texture="ActionPanel_ClickerAnim" FrameCount="10" Columns="5" Speed="30" Cycle="OneBounce"/>
-    
+
     <AlphaAnim				ID="OverflowHandleAlpha"	AlphaBegin="0" AlphaEnd="1" Speed="5" Cycle="Once" Pause=".6" Hidden="1">
       <SlideAnim			ID="OverflowHandleSlide"	Anchor="L,T"									Size="parent,parent" Begin="-30,20" End="0,0" Cycle="Once" Speed="1" Function="OutQuint" Pause=".6">
         <Button																	Anchor="L,B" Offset="75,152"	Size="27,11" Texture="ActionPanel_OverflowHandle"  StateOffsetIncrement="0,0" />
-      </SlideAnim>		
+      </SlideAnim>
     </AlphaAnim>
     <AlphaAnim				ID="TurnBlockerAlpha4"		AlphaBegin="0" AlphaEnd="1" Speed="5" Cycle="Once" Pause=".4" Hidden="1">
       <SlideAnim			ID="TurnBlockerSlide4"		Anchor="L,T"									Size="parent,parent" Begin="-20,20" End="0,0" Cycle="Once" Speed="1" Function="OutQuint" Pause=".4">
 				<Image																	Anchor="L,B" Offset="29,120"	Size="60,60"	Texture="ActionPanel_TurnBlocker3"   StateOffsetIncrement="0,0" >
           <Button	ID="TurnBlockerButton4"		Anchor="C,C"		 Offset="3,-2"							Size="40,40"  StateOffsetIncrement="0,0" Texture="Notifications40"/>
 				</Image>
-			</SlideAnim>		
+			</SlideAnim>
     </AlphaAnim>
     <AlphaAnim				ID="TurnBlockerAlpha3"		AlphaBegin="0" AlphaEnd="1" Speed="5" Cycle="Once" Pause=".2" Hidden="1">
       <SlideAnim			ID="TurnBlockerSlide3"		Anchor="L,T"									Size="parent,parent" Begin="0,30" End="0,0" Cycle="Once" Speed="1" Function="OutQuint" Pause=".2">
 				<Image																	Anchor="L,B" Offset="2,68"		Size="50,71"	Texture="ActionPanel_TurnBlocker2"   StateOffsetIncrement="0,0">
           <Button	ID="TurnBlockerButton3"		Anchor="C,T" Offset="3,7" Size="40,40"  StateOffsetIncrement="0,0"  Texture="Notifications40" />
 				</Image>
-      </SlideAnim>		
+      </SlideAnim>
     </AlphaAnim>
     <AlphaAnim				ID="TurnBlockerAlpha2"		AlphaBegin="0" AlphaEnd="1" Speed="5" Cycle="Once"						Hidden="1">
       <SlideAnim			ID="TurnBlockerSlide2"		Anchor="L,T"								Size="parent,parent" Begin="10,20" End="0,0" Cycle="Once" Speed="1" Function="OutQuint" >
@@ -36,24 +36,24 @@
 				</Image>
       </SlideAnim>
     </AlphaAnim>
-		
+
     <Image																						Anchor="R,B"	Offset="14,6" Texture="ActionPanel_Gold1.dds"  />
-		
+
     <AlphaAnim			ID="TurnBlockerContainerAlpha"		AlphaBegin="0" AlphaEnd="1" Speed="5" Cycle="Once" Stopped="1"  Hidden="1">
       <SlideAnim		ID="TurnBlockerContainerSlide"		Anchor="L,T"										Size="parent,parent"		Begin="0,20" End="0,0" Cycle="Once" Speed="1" Function="OutQuint" Stopped="1">
         <Grid				ID="OverflowContainer"						Anchor="R,B"	Offset="0,168"		Size="230,130"	Texture="ActionPanel_TurnBlocker" NoStateChange="1" SliceCorner="20,25" SliceTextureSize="171,48" >
           <Stack		ID="OverflowStack"								Offset="10,7" />
         </Grid>
       </SlideAnim>
-    </AlphaAnim>		
+    </AlphaAnim>
     <AlphaAnim			ID="OverflowAlpha"								AlphaBegin="0" AlphaEnd="1" Speed="5" Cycle="Once" Pause=".6" Hidden="0">
       <SlideAnim		ID="OverflowSlide"								Anchor="L,T"										Size="parent,parent" Begin="-30,20" End="0,0" Cycle="Once" Speed="1" Function="OutQuint"  Pause=".6">
         <Image			ID="OverflowCheckboxGroup"																	Anchor="L,B"	Offset="82,134"		Size="50,50" Color="0,0,0,255" Texture="Controls_Glow2" Hidden="1">
           <CheckBox	ID="OverflowCheckbox"							Anchor="C,T"	ButtonTexture="Controls_ButtonPlus_Up" ButtonSize="36,36" UseSelectedTextures="1" CheckTexture="Controls_Bolt" CheckColor="0,0,0,0" />
         </Image>
       </SlideAnim>
-    </AlphaAnim>		
-	
+    </AlphaAnim>
+
     <Button					ID="EndTurnButtonLabel"						Anchor="R,B"	Offset="-2,167"	Size="171,48"					Texture="ActionPanel_TurnBlocker.dds" NoStateChange="1">
 		<AlphaAnim Anchor="C,C" Cycle="Bounce" Speed="1" AlphaStart="1" AlphaEnd="0.2" Pause="3" >
 			<Label				ID="EndTurnText"									Align="C,C" Anchor="C,C"	Offset="0,-3"	WrapWidth="165"					Style="ActionPanelText"	String="LOC_ACTION_PANEL_END_TURN" />
@@ -63,7 +63,7 @@
     <Button					ID="ObserverButtonLabel"						Anchor="R,B"	Offset="-2,167"	Size="171,48"					Texture="ActionPanel_TurnBlocker.dds" NoStateChange="1" Hidden="1">
       <Label				ID="ObserverText"									Align="C,C" Anchor="C,C"	Offset="0,-3"	WrapWidth="165"					Style="ActionPanelText"	String="LOC_ACTION_PANEL_OBSERVING" />
     </Button>
-  
+
 		<Image																						Anchor="R,B"																				Texture="ActionPanel_Gold2.dds" Offset="20,2" >
       <Container ID="AgeScoreContainer" Size="148,147">
         <Container Size="138,138" Offset="14,-2" >
@@ -85,10 +85,10 @@
         </Container>
       </Container>
 
-			<Container			ID="EraContainer"						Offset="2,-15">				
+			<Container			ID="EraContainer"						Offset="2,-15">
 				<Image				ID="EraIndicator" Rotate="0" Texture="ActionPanel_EraIndicator" />
 			</Container>
-			
+
       <Image				ID="DarkAgeShadow" Hidden="true"  Offset="5,20"	Texture="ActionPanel_EffectDark_Globe" Anchor="R,B" />
       <FlipAnim ID="GoldenAgeAnimation" FrameCount="120" Texture="ActionPanel_EffectGolden_Globe" Columns="11" Speed="30" Anchor="R,B" Size="224,224" Offset="-47,-31" Stopped="0"/>
       <FlipAnim ID="TurnAgeAnimation" FrameCount="17" Texture="ActionPanel_TurnProcessing" Columns="8" Anchor="R,B" Size="102,102" Offset="15,32" Stopped="0"/>
@@ -123,7 +123,7 @@
         </Container>
       </Container>
     </Image>
-		
+
 		<Tutorial	   			ID="TutNotificationPointer"	Style="TutorialContainer"			Anchor="L,T"	Offset="-40,0"	TriggerBy="TutorialNotificationPointer" >
 			<SlideAnim																			Start="0,0"		EndOffset="-20,0" Cycle="Bounce" Function="OutQuad" >
 				<Image																			Offset="0,0"	Size="58,44"		Texture="Tutorial_ArrowH" />
@@ -149,7 +149,7 @@
 			<Image																			Offset="-20,-35"	Size="44,58"		Texture="Tutorial_ArrowV" />
 		  </SlideAnim>
 		</Tutorial>
-		
+
 		<Tutorial   			ID="TutSelectEndTurnActionC"	Style="TutorialContainer"			Anchor="C,T"	Offset="5,50"	AnchorSide="O,O"  TriggerBy="TutorialSelectEndTurnC" >
 			<Grid																				Style="TutorialEndTurnCalloutGrid"  >
 				<Label																			Style="TutorialEndTurnHeaderText"		String="LOC_META_11_HEAD" />
@@ -169,7 +169,7 @@
 			<Image																			Offset="-20,-35"	Size="44,58"		Texture="Tutorial_ArrowV" />
 		  </SlideAnim>
 		</Tutorial>
-		
+
 		<Tutorial   			ID="TutSelectEndTurnActionE"	Style="TutorialContainer"			Anchor="C,T"	Offset="5, 50"	AnchorSide="O,O"  TriggerBy="TutorialSelectEndTurnE">
 			<Grid																																				Style="TutorialEndTurnCalloutGrid"  >
 				<Label																			Style="TutorialEndTurnHeaderText"					String="LOC_META_19_HEAD" />
@@ -234,7 +234,7 @@
     </Image>
 	</Container>
 
-	
+
   <!-- INSTANCES -->
 
   <Instance				Name="TurnBlockerInstance">
@@ -255,5 +255,5 @@
 		<!-- Dialog Support -->
 	<Include File="PopupDialog" />
 	<MakeInstance Name="PopupDialog" />
-	
+
 </Context>

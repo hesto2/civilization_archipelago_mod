@@ -181,6 +181,15 @@ function OnRefresh()
 	RealizeEraIndicator();
 end
 
+function CanProgress()
+  local currentEra = Game.GetEras():GetCurrentEra()
+  local maxAllowedEra =Game.GetProperty("MaxAllowedEra") or -1
+  if maxAllowedEra == -1 then
+    return true
+  end
+  return maxAllowedEra >= currentEra + 1
+end
+
 -- ===========================================================================
 -- Set the era rotation and tooltip.
 -- ===========================================================================
@@ -202,10 +211,17 @@ function RealizeEraIndicator()
 	local gameEras :table = Game.GetEras();
 	for _,kEra in pairs(g_kEras) do
 		if kEra.Index == displayEra then
-			local description:string = Locale.Lookup("LOC_GAME_ERA_DESC", kEra.Description );
-			local turnsTill :number = gameEras:GetNextEraCountdown() + 1;	-- 0 turns remaining is the last turn, shift by 1 to make sense to non-programmers
+			local description: string = Locale.Lookup("LOC_GAME_ERA_DESC", kEra.Description );
+			local turnsTill : number = gameEras:GetNextEraCountdown() + 1;	-- 0 turns remaining is the last turn, shift by 1 to make sense to non-programmers
+      local maxAllowedEra =Game.GetProperty("MaxAllowedEra") or -1
+      local canProgress = CanProgress()
+      local progressText = ""
+      print(canProgress)
+      if not canProgress then
+        progressText = " (Progressive Era required!)"
+      end
 			if turnsTill > 0 then
-				 description = description .. "[NEWLINE][NEWLINE]" .. Locale.Lookup("LOC_GLORY_HUD_ERA_ENDS_IN", turnsTill);
+				 description = description .. "[NEWLINE]" .. progressText .. "[NEWLINE]" .. Locale.Lookup("LOC_GLORY_HUD_ERA_ENDS_IN", turnsTill);
 			end
 			Controls.EraToolTipArea1:SetToolTipString( description );
 			Controls.EraToolTipArea2:SetToolTipString( description );
