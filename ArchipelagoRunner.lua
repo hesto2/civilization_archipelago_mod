@@ -156,6 +156,26 @@ function OnTeamVictory(teamID, victoryType, eventID)
     print("END OnTeamVictory")
 end
 
+function OnGameEraChanged(previousEraID, newEraID)
+    print("START OnGameEraChanged")
+    maxAllowedEra = Game.GetProperty("MaxAllowedEra") or -1
+    if maxAllowedEra == -1 then
+      return
+    elseif newEraID > maxAllowedEra then
+      print("Max allowed era exceeded")
+      ForceDefeat()
+    end
+    print("END OnGameEraChanged")
+end
+
+function SetMaxAllowedEra(eraID)
+    Game.SetProperty("MaxAllowedEra", eraID)
+end
+
+function ForceDefeat()
+  Game.RetirePlayer(HUMAN_PLAYER:GetID())
+end
+
 -- CLIENT FUNCTION
 function ClientGetVictory()
     victory = Game.GetProperty("Victory") or "false"
@@ -169,6 +189,7 @@ function Init()
     Events.ResearchCompleted.Add(OnResearchComplete)
     Events.CivicCompleted.Add(OnCivicComplete)
     Events.TeamVictory.Add(OnTeamVictory)
+    Events.GameEraChanged.Add(OnGameEraChanged)
 
     -- Initialize the techs
     TECHS = DB.Query("Select * FROM Technologies")
@@ -227,4 +248,5 @@ Game.IsInGame = IsInGame
 Game.ClientGetLastReceivedIndex = ClientGetLastReceivedIndex
 Game.Resync = Resync
 Game.ClientGetVictory = ClientGetVictory
+Game.SetMaxAllowedEra = SetMaxAllowedEra
 
