@@ -31,6 +31,9 @@
     <File>Replacers/TechTreeNode.xml</File>
     <File>Replacers/GovernmentScreen.lua</File>
     <File>Replacers/ActionPanel.lua</File>
+    <File>Replacers/ActionPanel_Expansion1.lua</File>
+    <File>Replacers/ActionPanel_Expansion2.lua</File>
+    <File>Replacers/ActionPanel.xml</File>
 
     <!-- Icons -->
     <File>Icons/NewTech128.dds</File>
@@ -74,6 +77,9 @@
       <File>Replacers/TechTreeNode.xml</File>
       <File>Replacers/GovernmentScreen.lua</File>
       <File>Replacers/ActionPanel.lua</File>
+      <File>Replacers/ActionPanel_Expansion1.lua</File>
+      <File>Replacers/ActionPanel_Expansion2.lua</File>
+      <File>Replacers/ActionPanel.xml</File>
     </ImportFiles>
 
     <ReplaceUIScript id="Archipelago_ResearchChooser">
@@ -116,6 +122,13 @@
         <LoadOrder>-101</LoadOrder>
         <LuaContext>ActionPanel</LuaContext>
         <LuaReplace>Replacers/ActionPanel.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_Expansion2_ActionPanel" >
+      <Properties>
+        <LoadOrder>100</LoadOrder>
+        <LuaContext>ActionPanel</LuaContext>
+        <LuaReplace>Replacers/ActionPanel_Expansion2.lua</LuaReplace>
       </Properties>
     </ReplaceUIScript>
 

@@ -1374,3 +1374,4 @@ function Initialize()
 	ContextPtr:SetRefreshHandler( OnRefresh );
 end
 Initialize();
+print(Game:GetEras():GetNextEraCountdown())
