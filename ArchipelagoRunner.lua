@@ -148,8 +148,11 @@ function OnCivicComplete(playerID, civicID)
 end
 
 function OnTeamVictory(teamID, victoryType, eventID)
-    print("START OnTeamVictory")
-    Game.SetProperty("Victory", "true")
+    print("START OnTeamVictory", teamID, victoryType, eventID)
+    if HUMAN_PLAYER:GetTeam() == teamID then
+        print("Victory!")
+        Game.SetProperty("Victory", "true")
+    end
     print("END OnTeamVictory")
 end
 
