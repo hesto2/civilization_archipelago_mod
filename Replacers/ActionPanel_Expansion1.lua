@@ -216,7 +216,6 @@ function RealizeEraIndicator()
       local maxAllowedEra =Game.GetProperty("MaxAllowedEra") or -1
       local canProgress = CanProgress()
       local progressText = ""
-      print(canProgress)
       if not canProgress then
         progressText = " (Progressive Era required!)"
       end

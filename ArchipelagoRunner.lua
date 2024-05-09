@@ -40,6 +40,14 @@ function GetCheckedLocations()
             table.insert(locations, 1, value.CivicType)
         end
     end
+    currentEra = Game.GetEras():GetCurrentEra()
+
+    while currentEra > 0 do -- Don't include ERA_ANCIENT
+        table.insert(locations, 1, GameInfo.Eras[currentEra].EraType)
+        currentEra = currentEra - 1
+    end
+
+
     print("END GetCheckedLocations")
     return locations
 end
@@ -159,11 +167,14 @@ end
 function OnGameEraChanged(previousEraID, newEraID)
     print("START OnGameEraChanged")
     maxAllowedEra = Game.GetProperty("MaxAllowedEra") or -1
-    if maxAllowedEra == -1 then
-      return
-    elseif newEraID > maxAllowedEra then
-      print("Max allowed era exceeded")
-      ForceDefeat()
+    if newEraID > maxAllowedEra and maxAllowedEra ~= -1 then
+        print("Max allowed era exceeded")
+        ForceDefeat()
+    else
+        locations = Game.GetProperty("UnsentCheckedLocations") or {}
+        era = GameInfo.Eras[newEraID].EraType
+        table.insert(locations, era)
+        Game.SetProperty("UnsentCheckedLocations", locations)
     end
     print("END OnGameEraChanged")
 end
@@ -173,7 +184,7 @@ function SetMaxAllowedEra(eraID)
 end
 
 function ForceDefeat()
-  Game.RetirePlayer(HUMAN_PLAYER:GetID())
+    Game.RetirePlayer(HUMAN_PLAYER:GetID())
 end
 
 -- CLIENT FUNCTION

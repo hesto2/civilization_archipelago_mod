@@ -13,13 +13,11 @@ function ShowEraCountdownPanel()
 	local currentEra = Game.GetEras():GetCurrentEra();
 	if (eraCountdown ~= nil and eraCountdown ~= 0 and eraCountdown ~= m_LastShownCountdownTurn and currentEra ~= nil) then
 		local currentEraInfo = GameInfo.Eras[currentEra];
-    print(currentEra)
     local maxAllowedEra = Game.GetProperty("MaxAllowedEra") or -1
     local canProgress = true
     if maxAllowedEra ~= -1 then
         canProgress = maxAllowedEra >= currentEra + 1
     end
-    print("Current era:", currentEra, "Max allowed era:", maxAllowedEra, "Can progress:", canProgress)
 
 		if (currentEraInfo ~= nil) then
 			m_LastShownCountdownTurn = eraCountdown;
