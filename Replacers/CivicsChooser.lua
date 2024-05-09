@@ -116,37 +116,20 @@ function View( playerID:number, kData:table )
 	end
 
 	table.sort(kData, function(a, b) return Locale.Compare(a.Name, b.Name) == -1; end);
-  shownRows = 0
-  blockerData = nil
 	for i, data in ipairs(kData) do
-    if data.CivicType == "CIVIC_BLOCKER" then
-      blockerData = data
-    end
-    -- AP: Tech blocker cannot be selected
-    if data.CivicType ~= "CIVIC_BLOCKER" and isAPCivic(data.CivicType) then
+    -- AP: Tech blocker cannot be selected until all prereqs are met
+    if data.CivicType == "CIVIC_BLOCKER" or isAPCivic(data.CivicType) then
       if data.IsCurrent or data.IsLastCompleted then
-        if data.IsLastCompleted == false then
-          shownRows = shownRows + 1
-        end
         RealizeCurrentCivic( playerID, data, nil, m_CachedModifiers );
         if (data.Repeatable) then
           AddAvailableCivic( playerID, data );
         end
       else
         AddAvailableCivic( playerID, data );
-        shownRows = shownRows + 1
       end
     end
 
 	end
-
-  if shownRows == 0 then
-    if blockerData ~= nil then
-      AddAvailableCivic(playerID, blockerData);
-    else
-      print("BLOCKER DATA IS NIL SOMEHOW")
-    end
-  end
 
 	RealizeSize();
 end

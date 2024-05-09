@@ -115,35 +115,19 @@ function View( playerID:number, kData:table )
 
 	table.sort(kData, function(a, b) return Locale.Compare(a.Name, b.Name) == -1; end);
 
-  shownRows = 0
 	for i, data in ipairs(kData) do
-    blockerData = nil
-    if data.TechType == "TECH_BLOCKER" then
-      blockerData = data
-    end
-    -- AP: Tech blocker cannot be selected
-    if data.TechType ~= "TECH_BLOCKER" and isAPTech(data.TechType) then
+    -- AP: Tech blocker can only be selected when all of its prereqs have been met
+    if data.TechType == "TECH_BLOCKER" or isAPTech(data.TechType) then
       if data.IsCurrent or data.IsLastCompleted then
-        if data.IsLastCompleted == false then
-          shownRows = shownRows + 1
-        end
         RealizeCurrentResearch(playerID, data);
         if data.Repeatable then
           AddAvailableResearch(playerID, data);
         end
       else
-        shownRows = shownRows + 1
         AddAvailableResearch(playerID, data);
       end
     end
 	end
-  if shownRows == 0 then
-    if blockerData ~= nil then
-      AddAvailableResearch(playerID, blockerData);
-    else
-      print("BLOCKER DATA IS NIL SOMEHOW")
-    end
-  end
 
 	-- TUTORIAL HACK: Ensure tutorial techs are in a specific position in the list:
 	if m_isTutorial then
@@ -258,7 +242,7 @@ function AddAvailableResearch( playerID:number, kData:table )
 	kItemInstance.Top:SetDisabled( isDisabled );
 
 	-- Hide/Show Recommendation Icon
-	if kData.IsRecommended and kData.AdvisorType then
+	if kData.IsRecommended and kData.AdvisorType and false then
 		kItemInstance.RecommendedIcon:SetIcon(kData.AdvisorType);
 		kItemInstance.RecommendedIcon:SetHide(false);
 	else

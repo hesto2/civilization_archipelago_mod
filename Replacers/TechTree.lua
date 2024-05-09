@@ -935,7 +935,7 @@ function PopulateNode(uiNode, playerTechData, statusOverride)
 	end
 
 	-- Show/Hide Recommended Icon
-	if live.IsRecommended and live.AdvisorType ~= nil and live.Status ~= ITEM_STATUS.RESEARCHED then
+	if live.IsRecommended and live.AdvisorType ~= nil and live.Status ~= ITEM_STATUS.RESEARCHED  and false then
 		uiNode.RecommendedIcon:SetIcon(live.AdvisorType);
 		uiNode.RecommendedIcon:SetHide(false);
 	else
