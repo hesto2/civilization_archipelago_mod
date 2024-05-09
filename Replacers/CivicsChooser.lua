@@ -141,7 +141,11 @@ function View( playerID:number, kData:table )
 	end
 
   if shownRows == 0 then
-    AddAvailableCivic(playerID, blockerData);
+    if blockerData ~= nil then
+      AddAvailableCivic(playerID, blockerData);
+    else
+      print("BLOCKER DATA IS NIL SOMEHOW")
+    end
   end
 
 	RealizeSize();

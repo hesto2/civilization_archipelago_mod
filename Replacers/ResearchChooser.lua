@@ -116,8 +116,8 @@ function View( playerID:number, kData:table )
 	table.sort(kData, function(a, b) return Locale.Compare(a.Name, b.Name) == -1; end);
 
   shownRows = 0
-  blockerData = nil
 	for i, data in ipairs(kData) do
+    blockerData = nil
     if data.TechType == "TECH_BLOCKER" then
       blockerData = data
     end
@@ -138,7 +138,11 @@ function View( playerID:number, kData:table )
     end
 	end
   if shownRows == 0 then
-    AddAvailableResearch(playerID, blockerData);
+    if blockerData ~= nil then
+      AddAvailableResearch(playerID, blockerData);
+    else
+      print("BLOCKER DATA IS NIL SOMEHOW")
+    end
   end
 
 	-- TUTORIAL HACK: Ensure tutorial techs are in a specific position in the list:
