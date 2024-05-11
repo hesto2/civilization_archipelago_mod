@@ -105,6 +105,7 @@
 <Row Technology="TECH_AP74" PrereqTech="TECH_AP60" />
 <Row Technology="TECH_AP75" PrereqTech="TECH_AP60" />
 <Row Technology="TECH_AP76" PrereqTech="TECH_AP60" />
+
 <Row Technology="TECH_BLOCKER" PrereqTech="TECH_AP69" />
 <Row Technology="TECH_BLOCKER" PrereqTech="TECH_AP70" />
 <Row Technology="TECH_BLOCKER" PrereqTech="TECH_AP71" />
@@ -113,6 +114,7 @@
 <Row Technology="TECH_BLOCKER" PrereqTech="TECH_AP74" />
 <Row Technology="TECH_BLOCKER" PrereqTech="TECH_AP75" />
 <Row Technology="TECH_BLOCKER" PrereqTech="TECH_AP76" />
+
 <Row Technology="TECH_POTTERY" PrereqTech="TECH_BLOCKER" />
 <Row Technology="TECH_ANIMAL_HUSBANDRY" PrereqTech="TECH_BLOCKER" />
 <Row Technology="TECH_MINING" PrereqTech="TECH_BLOCKER" />
@@ -182,14 +184,22 @@
 <Row Technology="TECH_NUCLEAR_FUSION" PrereqTech="TECH_BLOCKER" />
 <Row Technology="TECH_BUTTRESS" PrereqTech="TECH_BLOCKER" />
 <Row Technology="TECH_REFINING" PrereqTech="TECH_BLOCKER" />
-<Row Technology="TECH_SEASTEADS" PrereqTech="TECH_BLOCKER" />
-<Row Technology="TECH_ADVANCED_AI" PrereqTech="TECH_BLOCKER" />
-<Row Technology="TECH_ADVANCED_POWER_CELLS" PrereqTech="TECH_BLOCKER" />
-<Row Technology="TECH_CYBERNETICS" PrereqTech="TECH_BLOCKER" />
-<Row Technology="TECH_SMART_MATERIALS" PrereqTech="TECH_BLOCKER" />
-<Row Technology="TECH_PREDICTIVE_SYSTEMS" PrereqTech="TECH_BLOCKER" />
-<Row Technology="TECH_OFFWORLD_MISSION" PrereqTech="TECH_BLOCKER" />
 <Row Technology="TECH_FUTURE_TECH" PrereqTech="TECH_BLOCKER" />
+<Row Technology="TECH_FUTURE_TECH" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_SEASTEADS" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_SEASTEADS" PrereqTech="TECH_BLOCKER" />
+<Row Technology="TECH_ADVANCED_AI" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_ADVANCED_AI" PrereqTech="TECH_BLOCKER" />
+<Row Technology="TECH_ADVANCED_POWER_CELLS" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_ADVANCED_POWER_CELLS" PrereqTech="TECH_BLOCKER" />
+<Row Technology="TECH_CYBERNETICS" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_CYBERNETICS" PrereqTech="TECH_BLOCKER" />
+<Row Technology="TECH_SMART_MATERIALS" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_SMART_MATERIALS" PrereqTech="TECH_BLOCKER" />
+<Row Technology="TECH_PREDICTIVE_SYSTEMS" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_PREDICTIVE_SYSTEMS" PrereqTech="TECH_BLOCKER" />
+<Row Technology="TECH_OFFWORLD_MISSION" PrereqTech="TECH_ROBOTICS" />
+<Row Technology="TECH_OFFWORLD_MISSION" PrereqTech="TECH_BLOCKER" />
 
     </TechnologyPrereqs>
     <CivicPrereqs>
@@ -346,5 +356,11 @@
 <Row Civic="CIVIC_INFORMATION_WARFARE" PrereqCivic="CIVIC_BLOCKER" />
 <Row Civic="CIVIC_EXODUS_IMPERATIVE" PrereqCivic="CIVIC_BLOCKER" />
 <Row Civic="CIVIC_CULTURAL_HEGEMONY" PrereqCivic="CIVIC_BLOCKER" />
+<Row Civic="CIVIC_FUTURE_CIVIC" PrereqCivic="CIVIC_NEAR_FUTURE_GOVERNANCE" />
+<Row Civic="CIVIC_GLOBAL_WARMING_MITIGATION" PrereqCivic="CIVIC_NEAR_FUTURE_GOVERNANCE" />
+<Row Civic="CIVIC_SMART_POWER_DOCTRINE" PrereqCivic="CIVIC_NEAR_FUTURE_GOVERNANCE" />
+<Row Civic="CIVIC_INFORMATION_WARFARE" PrereqCivic="CIVIC_NEAR_FUTURE_GOVERNANCE" />
+<Row Civic="CIVIC_EXODUS_IMPERATIVE" PrereqCivic="CIVIC_NEAR_FUTURE_GOVERNANCE" />
+<Row Civic="CIVIC_CULTURAL_HEGEMONY" PrereqCivic="CIVIC_NEAR_FUTURE_GOVERNANCE" />
 </CivicPrereqs>
   </GameData>
