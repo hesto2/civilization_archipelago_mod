@@ -608,7 +608,15 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
 		local inst:table = m_kEraLabelIM:GetInstance();
 		local eraMarkerx, _	= ColumnRowToPixelXY( eraData.PriorColumns + 1, 0);
 		inst.Top:SetOffsetX( (eraMarkerx - (SIZE_NODE_X*0.5)) * (1/PARALLAX_SPEED) );
-		inst.EraTitle:SetText( Locale.Lookup("LOC_GAME_ERA_DESC",eraData.Description) );
+
+    title = Locale.Lookup("LOC_GAME_ERA_DESC", eraData.Description)
+    maxAllowedEra = Game.GetProperty("MaxAllowedEra") or -1
+
+    if maxAllowedEra ~= -1 and (eraData.Index ) > maxAllowedEra then
+      title = title .. " (Locked!)";
+    end
+
+		inst.EraTitle:SetText(title);
 
 		-- Dots on scrollbar
 		local markerx:number = (eraData.PriorColumns / m_maxColumns) * Controls.ScrollbarBackgroundArt:GetSizeX();
@@ -1127,6 +1135,7 @@ end
 --	Viewxx
 -- ===========================================================================
 function View( playerTechData:table )
+  BuildTree()
 
 	-- Output the node states for the tree
 	for _,node in pairs(g_uiNodes) do
