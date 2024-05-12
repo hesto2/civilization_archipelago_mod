@@ -11,6 +11,7 @@
 
   <Files>
     <!-- Custom files -->
+    <File>InitOptions.lua</File>
     <File>NewItems.xml</File>
     <File>NewPrereqs.xml</File>
     <File>ArchipelagoRunner.lua</File>
@@ -156,7 +157,9 @@
     </UpdateIcons>
 
     <!-- Handle new scripts -->
-
+    <AddGameplayScripts id="ArchipelagoInitOptions">
+      <File>InitOptions.lua</File>
+    </AddGameplayScripts>
     <AddGameplayScripts id="ArchipelagoRunner">
       <File>ArchipelagoRunner.lua</File>
     </AddGameplayScripts>

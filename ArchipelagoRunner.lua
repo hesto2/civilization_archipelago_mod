@@ -188,6 +188,11 @@ function SetMaxAllowedEra(eraID)
     Game.SetProperty("MaxAllowedEra", eraID)
 end
 
+function ClientGetMaxAllowedEra()
+    era = Game.GetProperty("MaxAllowedEra") or -1
+    return CLIENT_PREFIX .. era .. CLIENT_POSTFIX
+end
+
 function ForceDefeat()
     Game.RetirePlayer(HUMAN_PLAYER:GetID())
 end
@@ -265,4 +270,5 @@ Game.ClientGetLastReceivedIndex = ClientGetLastReceivedIndex
 Game.Resync = Resync
 Game.ClientGetVictory = ClientGetVictory
 Game.SetMaxAllowedEra = SetMaxAllowedEra
+Game.ClientGetMaxAllowedEra = ClientGetMaxAllowedEra
 
