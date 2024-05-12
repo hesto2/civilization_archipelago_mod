@@ -554,7 +554,6 @@ function AllocateUI( kNodeGrid:table, kPaths:table )
     if maxAllowedEra ~= -1 and (eraData.Index ) > maxAllowedEra then
       title = title .. " (Locked!)";
     end
-    print("eraData.Index", eraData.Index, "maxAllowedEra", maxAllowedEra, "title", title)
 
 		inst.EraTitle:SetText(title);
 

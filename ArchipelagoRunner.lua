@@ -97,7 +97,7 @@ function ClientGetLastReceivedIndex()
     return CLIENT_PREFIX .. tostring(index) .. CLIENT_POSTFIX
 end
 
-function HandleReceiveItem(id, name, type, sender)
+function HandleReceiveItem(id, name, type, sender, amount)
     print("START HandleReceiveItem type: " .. type)
     received = false
     notification_id = id
@@ -110,6 +110,11 @@ function HandleReceiveItem(id, name, type, sender)
         print("Received Civic", id)
         HUMAN_PLAYER:GetCulture():SetCulturalProgress(id, 999999)
         notification_id = id + 100 -- Tech ids and notification ids are not unique between each other
+        received = true
+    elseif type == "ERA" then
+        print("Received Era", id)
+        SetMaxAllowedEra(amount)
+        notification_id = id + 200
         received = true
     end
     if received then
