@@ -31,6 +31,8 @@
     <File>Replacers/CivicsTree.xml</File>
     <File>Replacers/TechTreeNode.xml</File>
     <File>Replacers/GovernmentScreen.lua</File>
+    <File>Replacers/GovernmentScreen_Expansion1.lua</File>
+    <File>Replacers/GovernmentScreen_Expansion2.lua</File>
     <File>Replacers/ActionPanel.lua</File>
     <File>Replacers/ActionPanel_Expansion1.lua</File>
     <File>Replacers/ActionPanel_Expansion2.lua</File>
@@ -78,6 +80,8 @@
       <File>Replacers/CivicsTree.xml</File>
       <File>Replacers/TechTreeNode.xml</File>
       <File>Replacers/GovernmentScreen.lua</File>
+      <File>Replacers/GovernmentScreen_Expansion1.lua</File>
+      <File>Replacers/GovernmentScreen_Expansion2.lua</File>
       <File>Replacers/ActionPanel.lua</File>
       <File>Replacers/ActionPanel_Expansion1.lua</File>
       <File>Replacers/ActionPanel_Expansion2.lua</File>
@@ -115,7 +119,7 @@
     </ReplaceUIScript>
     <ReplaceUIScript id="Archipelago_GovernmentScreen">
       <Properties>
-        <LoadOrder>150004</LoadOrder>
+        <LoadOrder>-102</LoadOrder>
         <LuaContext>GovernmentScreen</LuaContext>
         <LuaReplace>Replacers/GovernmentScreen.lua</LuaReplace>
       </Properties>
@@ -138,6 +142,20 @@
       <Properties>
         <LuaContext>NewTurnPanel</LuaContext>
         <LuaReplace>Replacers/NewTurnPanel_Expansion1.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_Expansion1_GovernmentScreen">
+      <Properties>
+        <LoadOrder>101</LoadOrder>
+        <LuaContext>GovernmentScreen</LuaContext>
+        <LuaReplace>Replacers/GovernmentScreen_Expansion1.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_Expansion2_GovernmentScreen">
+      <Properties>
+        <LoadOrder>102</LoadOrder>
+        <LuaContext>GovernmentScreen</LuaContext>
+        <LuaReplace>Replacers/GovernmentScreen_Expansion2.lua</LuaReplace>
       </Properties>
     </ReplaceUIScript>
 
