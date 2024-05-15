@@ -1121,9 +1121,11 @@ function PopulateNode(uiNode, playerTechData)
 	end
 
 	-- Show/Hide Recommended Icon
-	if live.IsRecommended and live.AdvisorType ~= nil then
-		uiNode.RecommendedIcon:SetIcon(live.AdvisorType);
+  AdvisorType = GameInfo.Civics[item.Type].AdvisorType
+	if AdvisorType == "ADVISOR_PROGRESSIVE" and live.Status ~= ITEM_STATUS.RESEARCHED then
+		uiNode.RecommendedIcon:SetIcon("ADVISOR_GENERIC");
 		uiNode.RecommendedIcon:SetHide(false);
+    uiNode.RecommendedIcon:SetToolTipString("This is a progression item!");
 	else
 		uiNode.RecommendedIcon:SetHide(true);
 	end

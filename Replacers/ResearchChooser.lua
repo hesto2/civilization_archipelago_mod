@@ -242,9 +242,11 @@ function AddAvailableResearch( playerID:number, kData:table )
 	kItemInstance.Top:SetDisabled( isDisabled );
 
 	-- Hide/Show Recommendation Icon
-	if kData.IsRecommended and kData.AdvisorType and false then
-		kItemInstance.RecommendedIcon:SetIcon(kData.AdvisorType);
+  AdvisorType = GameInfo.Technologies[kData.TechType].AdvisorType
+	if AdvisorType == "ADVISOR_PROGRESSIVE" then
+		kItemInstance.RecommendedIcon:SetIcon("ADVISOR_GENERIC");
 		kItemInstance.RecommendedIcon:SetHide(false);
+    kItemInstance.RecommendedIcon:SetToolTipString("This is a progression item!");
 	else
 		kItemInstance.RecommendedIcon:SetHide(true);
 	end

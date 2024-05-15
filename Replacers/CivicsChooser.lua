@@ -234,9 +234,10 @@ function AddAvailableCivic( playerID:number, kData:table )
 	end
 
 	-- Hide/Show Recommendation Icon
-	if kData.IsRecommended and kData.AdvisorType ~= nil then
-		kItemInstance.RecommendedIcon:SetIcon(kData.AdvisorType);
+	if kData.AdvisorType == "ADVISOR_PROGRESSIVE" then
+		kItemInstance.RecommendedIcon:SetIcon("ADVISOR_GENERIC");
 		kItemInstance.RecommendedIcon:SetHide(false);
+    kItemInstance.RecommendedIcon:SetToolTipString("This is a progression item!");
 	else
 		kItemInstance.RecommendedIcon:SetHide(true);
 	end
