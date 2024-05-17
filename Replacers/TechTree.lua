@@ -192,7 +192,7 @@ local m_kScrambledRowLookup	:table  = {-1,-3,2,4,0,1,-2,3};		-- To help scramble
 --	FUNCTIONS
 -- ===========================================================================
 function IsAPTech(name)
-  local start = "TECH_AP"
+  local start = "TECH_AP_"
   if name:sub(1, #start) == start and name ~= "TECH_APPRENTICESHIP" then
     return true
   end

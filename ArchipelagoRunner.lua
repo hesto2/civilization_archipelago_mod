@@ -26,7 +26,6 @@ function NotifyReceivedItem(item, index)
 end
 
 function GetCheckedLocations()
-    print("START GetCheckedLocations")
     locations = {}
     for key, value in pairs(TECHS) do
         id = key - 1
@@ -48,21 +47,18 @@ function GetCheckedLocations()
     end
 
 
-    print("END GetCheckedLocations")
     return locations
 end
 
 -- CLIENT FUNCTION
 function GetUnsentCheckedLocations()
     -- Gets the locations that have not been sent yet and returns them
-    print("START GetCheckedLocations")
     locations = {}
     unsent_locations = Game.GetProperty("UnsentCheckedLocations") or {}
     for key, value in pairs(unsent_locations) do
         name = value.TechnologyType or value.CivicType
         table.insert(locations, value)
     end
-    print("END GetCheckedLocations")
     Game.SetProperty("UnsentCheckedLocations", {})
     return CLIENT_PREFIX .. table.concat(locations, ",") .. CLIENT_POSTFIX
 end

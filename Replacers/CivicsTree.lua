@@ -193,7 +193,7 @@ local m_kScrambledRowLookup	:table  = {-1,-3,2,0,1,-2,3};		-- To help scramble m
 -- ===========================================================================
 
 function IsAPCivic(name)
-    local start = "CIVIC_AP"
+    local start = "CIVIC_AP_"
     if name:sub(1, #start) == start then
         return true
     end
