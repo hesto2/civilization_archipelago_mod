@@ -1,5 +1,4 @@
 -- This file needs to be loaded before the other archipelago custom scripts
-
 TECHS = {}
 TECH_BLOCKER_ID = -1
 
@@ -7,17 +6,42 @@ CIVICS = {}
 CIVIC_BLOCKER_ID = -1
 HUMAN_PLAYER = nil
 
+KEY_PLAYER = "PLAYER"
+KEY_CITY = "CITY"
+GOODY_HUT_MODIFIER_MAP = {
+    ["GOODY_GOLD_SMALL_MODIFIER"] = KEY_PLAYER,
+    ["GOODY_GOLD_MEDIUM_MODIFIER"] = KEY_PLAYER,
+    ["GOODY_GOLD_LARGE_MODIFIER"] = KEY_PLAYER,
+
+    ["GOODY_FAITH_SMALL_MODIFIER"] = KEY_PLAYER,
+    ["GOODY_FAITH_MEDIUM_MODIFIER"] = KEY_PLAYER,
+    ["GOODY_FAITH_LARGE_MODIFIER"] = KEY_PLAYER,
+
+    ["GOODY_DIPLOMACY_GRANT_FAVOR"] = KEY_PLAYER,
+    ["GOODY_DIPLOMACY_GRANT_GOVERNOR_TITLE"] = KEY_PLAYER,
+    ["GOODY_DIPLOMACY_GRANT_GOVERNOR_GRANT_ENVOY"] = KEY_PLAYER,
+    ["GOODY_DIPLOMACY_GRANT_GOVERNOR_GRANT_"] = KEY_PLAYER,
+
+    ["GOODY_CULTURE_GRANT_ONE_RELIC"] = KEY_PLAYER,
+
+    ["GOODY_MILITARY_GRANT_SCOUT"] = KEY_CITY,
+
+    ["GOODY_SURVIVORS_ADD_POPULATION"] = KEY_CITY,
+    ["GOODY_SURVIVORS_GRANT_BUILDER"] = KEY_CITY,
+    ["GOODY_SURVIVORS_GRANT_TRADER"] = KEY_CITY,
+    ["GOODY_SURVIVORS_GRANT_SETTLER"] = KEY_CITY,
+
+}
+
 -- Messages read by the client will be started/ended with these
 local CLIENT_PREFIX = "APSTART:"
 local CLIENT_POSTFIX = ":APEND"
 
 -- Sets to true once a turn begins, this is to let the client know that the game can be interacted with now
-IS_IN_GAME = false
 
 function OnTurnBegin()
-    print("START OnTurnBegin")
-    IS_IN_GAME = true
-    print("END OnTurnBegin")
+    -- print("START OnTurnBegin")
+    -- print("END OnTurnBegin")
 end
 
 function NotifyReceivedItem(item, index)
@@ -46,6 +70,11 @@ function GetCheckedLocations()
         currentEra = currentEra - 1
     end
 
+    i = 0
+    while i < Game.GetProperty("TotalGoodyHuts") do
+        table.insert(locations, 1, "GOODY_HUT_" .. i)
+        i = i + 1
+    end
 
     return locations
 end
@@ -73,7 +102,9 @@ end
 -- CLIENT FUNCTION
 function IsInGame()
     result = "true"
-    if IS_IN_GAME == false then
+    -- This function gets unloaded when in the main menu and reloaded in the game
+      -- For some reason IsInGame and other GameObject bound functions are still available in the main menu after exiting a game
+    if GetLastReceivedIndex == nil then
         result = "false"
     end
     return CLIENT_PREFIX .. result .. CLIENT_POSTFIX
@@ -84,7 +115,8 @@ function SetLastReceivedIndex(index)
 end
 
 function GetLastReceivedIndex()
-    return Game.GetProperty("LastReceivedIndex") or -1
+  -- If it isn't a number or nil then return -1
+  return tonumber(Game.GetProperty("LastReceivedIndex") or -1) or -1
 end
 
 -- CLIENT FUNCTION
@@ -97,12 +129,12 @@ function HandleReceiveItem(id, name, type, sender, amount)
     print("START HandleReceiveItem type: " .. type)
     received = false
     notification_id = id
-    if type == "TECH" and HUMAN_PLAYER:GetTechs():HasTech(id) == false then
+    if type == "TECH" then
         print("Received Tech", id)
         HUMAN_PLAYER:GetTechs():SetResearchProgress(id, 999999)
         received = true
 
-    elseif type == "CIVIC" and HUMAN_PLAYER:GetCulture():HasCivic(id) == false then
+    elseif type == "CIVIC" then
         print("Received Civic", id)
         HUMAN_PLAYER:GetCulture():SetCulturalProgress(id, 999999)
         notification_id = id + 100 -- Tech ids and notification ids are not unique between each other
@@ -111,6 +143,16 @@ function HandleReceiveItem(id, name, type, sender, amount)
         print("Received Era", id)
         SetMaxAllowedEra(amount)
         notification_id = id + 200
+        received = true
+    elseif type == "GOODY" then
+        print("Received Goody Hut", id)
+        if GOODY_HUT_MODIFIER_MAP[id] == KEY_PLAYER then
+            HUMAN_PLAYER:AttachModifierByID(id)
+        elseif GOODY_HUT_MODIFIER_MAP[id] == KEY_CITY then
+            city = HUMAN_PLAYER:GetCities():GetCapitalCity()
+            city:AttachModifierByID(id)
+        end
+        notification_id = id + 300
         received = true
     end
     if received then
@@ -139,6 +181,12 @@ function OnResearchComplete(playerID, techID)
             Game.SetProperty("UnsentCheckedLocations", locations)
         end
     end
+    if playerID == HUMAN_PLAYER:GetID() and techID == TECH_BLOCKER_ID then
+        print("Unsetting BLOCKER")
+        Players[HUMAN_PLAYER:GetID()]:GetTechs():SetTech(TECH_BLOCKER_ID, false)
+        Players[HUMAN_PLAYER:GetID()]:GetTechs():SetResearchProgress(TECH_BLOCKER_ID, 0)
+        Players[HUMAN_PLAYER:GetID()]:GetTechs():SetResearchingTech(TECH_BLOCKER_ID)
+    end
     print("END OnResearchComplete")
 end
 
@@ -152,6 +200,12 @@ function OnCivicComplete(playerID, civicID)
             table.insert(locations, civic.CivicType)
             Game.SetProperty("UnsentCheckedLocations", locations)
         end
+    end
+    if playerID == HUMAN_PLAYER:GetID() and civicID == CIVIC_BLOCKER_ID then
+        print("Unsetting BLOCKER")
+        Players[HUMAN_PLAYER:GetID()]:GetCulture():SetCivic(CIVIC_BLOCKER_ID, false)
+        Players[HUMAN_PLAYER:GetID()]:GetCulture():SetCulturalProgress(CIVIC_BLOCKER_ID, 0)
+        Players[HUMAN_PLAYER:GetID()]:GetCulture():SetProgressingCivic(CIVIC_BLOCKER_ID)
     end
     print("END OnCivicComplete")
 end
@@ -199,6 +253,25 @@ function ClientGetVictory()
     return CLIENT_PREFIX .. victory .. CLIENT_POSTFIX
 end
 
+function OnGoodyHutReward(playerID, unitID)
+    print("START OnGoodyHutReward")
+    if playerID == HUMAN_PLAYER:GetID() then
+        print("Goody Hut Reward")
+        total = Game.GetProperty("TotalGoodyHuts") or 0
+        locations = Game.GetProperty("UnsentCheckedLocations") or {}
+        table.insert(locations, "GOODY_HUT_" .. total)
+        Game.SetProperty("UnsentCheckedLocations", locations)
+        Game.SetProperty("TotalGoodyHuts", total + 1)
+    end
+    print("END OnGoodyHutReward")
+
+end
+
+function OnExitToMainMenu()
+    print("START OnExitToMainMenu")
+    print("END OnExitToMainMenu")
+end
+
 function Init()
     print("Running Main")
     -- Events to listen for
@@ -207,6 +280,8 @@ function Init()
     Events.CivicCompleted.Add(OnCivicComplete)
     Events.TeamVictory.Add(OnTeamVictory)
     Events.GameEraChanged.Add(OnGameEraChanged)
+    Events.GoodyHutReward.Add(OnGoodyHutReward)
+    Events.ExitToMainMenu.Add(OnExitToMainMenu)
 
     -- Initialize the techs
     TECHS = DB.Query("Select * FROM Technologies")

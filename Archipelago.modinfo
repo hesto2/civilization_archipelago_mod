@@ -19,6 +19,7 @@
     <File>ArchipelagoDBOverrides.sql</File>
     <File>DeathLinkHandlers.lua</File>
     <File>UIHandlers.lua</File>
+    <File>GoodyHutOverride.sql</File>
 
     <!-- Replacers -->
     <File>Replacers/ResearchChooser.lua</File>
@@ -63,6 +64,13 @@
         <LoadOrder>99999</LoadOrder>
       </Properties>
       <File>ArchipelagoDBOverrides.sql</File>
+    </UpdateDatabase>
+
+    <UpdateDatabase id="ArchipelagoGoodyHuts">
+      <Properties>
+        <LoadOrder>100000</LoadOrder>
+      </Properties>
+      <File>GoodyHutOverride.sql</File>
     </UpdateDatabase>
     <!-- Handle replacers -->
 
