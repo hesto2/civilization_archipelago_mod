@@ -19,8 +19,7 @@ GOODY_HUT_MODIFIER_MAP = {
 
     ["GOODY_DIPLOMACY_GRANT_FAVOR"] = KEY_PLAYER,
     ["GOODY_DIPLOMACY_GRANT_GOVERNOR_TITLE"] = KEY_PLAYER,
-    ["GOODY_DIPLOMACY_GRANT_GOVERNOR_GRANT_ENVOY"] = KEY_PLAYER,
-    ["GOODY_DIPLOMACY_GRANT_GOVERNOR_GRANT_"] = KEY_PLAYER,
+    ["GOODY_DIPLOMACY_GRANT_ENVOY"] = KEY_PLAYER,
 
     ["GOODY_CULTURE_GRANT_ONE_RELIC"] = KEY_PLAYER,
 
@@ -29,7 +28,7 @@ GOODY_HUT_MODIFIER_MAP = {
     ["GOODY_SURVIVORS_ADD_POPULATION"] = KEY_CITY,
     ["GOODY_SURVIVORS_GRANT_BUILDER"] = KEY_CITY,
     ["GOODY_SURVIVORS_GRANT_TRADER"] = KEY_CITY,
-    ["GOODY_SURVIVORS_GRANT_SETTLER"] = KEY_CITY,
+    ["GOODY_SURVIVORS_GRANT_SETTLER"] = KEY_CITY
 
 }
 
@@ -40,8 +39,19 @@ local CLIENT_POSTFIX = ":APEND"
 -- Sets to true once a turn begins, this is to let the client know that the game can be interacted with now
 
 function OnTurnBegin()
-    -- print("START OnTurnBegin")
-    -- print("END OnTurnBegin")
+    unsent_goodies = GetUnsentGoodies()
+    if #unsent_goodies > 0 then
+        print("Handling unsent goodies")
+        for key, id in pairs(unsent_goodies) do
+            city = HUMAN_PLAYER:GetCities():GetCapitalCity()
+            if city then
+                print("Attaching modifier to city", id)
+                city:AttachModifierByID(id)
+            end
+        end
+    end
+    Game.SetProperty("UnsentGoodies", {})
+
 end
 
 function NotifyReceivedItem(item, index)
@@ -71,7 +81,7 @@ function GetCheckedLocations()
     end
 
     i = 0
-    while i < Game.GetProperty("TotalGoodyHuts") do
+    while i < (Game.GetProperty("TotalGoodyHuts") or 0) do
         table.insert(locations, 1, "GOODY_HUT_" .. i)
         i = i + 1
     end
@@ -103,7 +113,7 @@ end
 function IsInGame()
     result = "true"
     -- This function gets unloaded when in the main menu and reloaded in the game
-      -- For some reason IsInGame and other GameObject bound functions are still available in the main menu after exiting a game
+    -- For some reason IsInGame and other GameObject bound functions are still available in the main menu after exiting a game
     if GetLastReceivedIndex == nil then
         result = "false"
     end
@@ -115,8 +125,8 @@ function SetLastReceivedIndex(index)
 end
 
 function GetLastReceivedIndex()
-  -- If it isn't a number or nil then return -1
-  return tonumber(Game.GetProperty("LastReceivedIndex") or -1) or -1
+    -- If it isn't a number or nil then return -1
+    return tonumber(Game.GetProperty("LastReceivedIndex") or -1) or -1
 end
 
 -- CLIENT FUNCTION
@@ -150,9 +160,16 @@ function HandleReceiveItem(id, name, type, sender, amount)
             HUMAN_PLAYER:AttachModifierByID(id)
         elseif GOODY_HUT_MODIFIER_MAP[id] == KEY_CITY then
             city = HUMAN_PLAYER:GetCities():GetCapitalCity()
-            city:AttachModifierByID(id)
+            if city then
+                city:AttachModifierByID(id)
+            else
+                unsent_goodies = GetUnsentGoodies()
+                table.insert(unsent_goodies, id)
+                Game.SetProperty("UnsentGoodies", unsent_goodies)
+            end
         end
-        notification_id = id + 300
+
+        notification_id = 1000 + GetLastReceivedIndex()
         received = true
     end
     if received then
@@ -188,6 +205,10 @@ function OnResearchComplete(playerID, techID)
         Players[HUMAN_PLAYER:GetID()]:GetTechs():SetResearchingTech(TECH_BLOCKER_ID)
     end
     print("END OnResearchComplete")
+end
+
+function GetUnsentGoodies()
+    return Game.GetProperty("UnsentGoodies") or {}
 end
 
 function OnCivicComplete(playerID, civicID)
@@ -258,18 +279,20 @@ function OnGoodyHutReward(playerID, unitID)
     if playerID == HUMAN_PLAYER:GetID() then
         print("Goody Hut Reward")
         total = Game.GetProperty("TotalGoodyHuts") or 0
+        new_total = total + 1
         locations = Game.GetProperty("UnsentCheckedLocations") or {}
-        table.insert(locations, "GOODY_HUT_" .. total)
+        table.insert(locations, "GOODY_HUT_" .. new_total)
         Game.SetProperty("UnsentCheckedLocations", locations)
-        Game.SetProperty("TotalGoodyHuts", total + 1)
+        Game.SetProperty("TotalGoodyHuts", new_total)
     end
     print("END OnGoodyHutReward")
 
 end
 
-function OnExitToMainMenu()
-    print("START OnExitToMainMenu")
-    print("END OnExitToMainMenu")
+function OnCivicBoostTriggered(playerID, civicID)
+end
+
+function OnTechBoostTriggered(playerID, techID)
 end
 
 function Init()
@@ -281,7 +304,8 @@ function Init()
     Events.TeamVictory.Add(OnTeamVictory)
     Events.GameEraChanged.Add(OnGameEraChanged)
     Events.GoodyHutReward.Add(OnGoodyHutReward)
-    Events.ExitToMainMenu.Add(OnExitToMainMenu)
+    Events.TechBoostTriggered.Add(OnTechBoostTriggered)
+    Events.CivicBoostTriggered.Add(OnCivicBoostTriggered)
 
     -- Initialize the techs
     TECHS = DB.Query("Select * FROM Technologies")
