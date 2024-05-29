@@ -290,9 +290,23 @@ function OnGoodyHutReward(playerID, unitID)
 end
 
 function OnCivicBoostTriggered(playerID, civicID)
+  local boostCheckEnabled = Game.GetProperty("BoostsAsChecks")
+  if boostCheckEnabled and playerID == HUMAN_PLAYER:GetID() then
+    locations = Game.GetProperty("UnsentCheckedLocations") or {}
+    civic = CIVICS[civicID + 1]
+    table.insert(locations, civic.CivicType)
+    Game.SetProperty("UnsentCheckedLocations", locations)
+  end
 end
 
 function OnTechBoostTriggered(playerID, techID)
+  local boostCheckEnabled = Game.GetProperty("BoostsAsChecks")
+  if boostCheckEnabled and playerID == HUMAN_PLAYER:GetID() then
+    locations = Game.GetProperty("UnsentCheckedLocations") or {}
+    tech = TECHS[techID + 1]
+    table.insert(locations, tech.TechnologyType)
+    Game.SetProperty("UnsentCheckedLocations", locations)
+  end
 end
 
 function Init()
