@@ -41,6 +41,7 @@
     <File>Replacers/ActionPanel_Expansion2.lua</File>
     <File>Replacers/ActionPanel.xml</File>
     <File>Replacers/NewTurnPanel_Expansion1.lua</File>
+    <File>Replacers/BoostUnlockedPopup.lua</File>
 
     <!-- Icons -->
     <File>Icons/NewTech128.dds</File>
@@ -109,6 +110,7 @@
       <File>Replacers/ActionPanel_Expansion2.lua</File>
       <File>Replacers/ActionPanel.xml</File>
       <File>Replacers/NewTurnPanel_Expansion1.lua</File>
+      <File>Replacers/BoostUnlockedPopup.lua</File>
     </ImportFiles>
 
     <ReplaceUIScript id="Archipelago_ResearchChooser">
@@ -164,6 +166,12 @@
       <Properties>
         <LuaContext>NewTurnPanel</LuaContext>
         <LuaReplace>Replacers/NewTurnPanel_Expansion1.lua</LuaReplace>
+      </Properties>
+    </ReplaceUIScript>
+    <ReplaceUIScript id="Archipelago_BoostUnlockedPopup">
+      <Properties>
+        <LuaContext>NewTurnPanel</LuaContext>
+        <LuaReplace>Replacers/BoostUnlockedPopup.lua</LuaReplace>
       </Properties>
     </ReplaceUIScript>
     <ReplaceUIScript id="Archipelago_Expansion1_GovernmentScreen">
