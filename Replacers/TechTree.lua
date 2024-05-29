@@ -95,6 +95,7 @@ SHOW_ARCHIPELAGO_TREE = true
 
 g_kEras					= {};				-- type to costs
 g_kItemDefaults			= {};				-- Static data about items
+g_kItemDefaultsAll    = {};				-- Static data about items (including those not shown)
 g_uiNodes				= {};
 g_uiConnectorSets		= {};
 
@@ -200,7 +201,8 @@ function IsAPTech(name)
 end
 
 function ShouldShowTech(name)
-  if name == "TECH_BLOCKER" then
+  local start = "BOOSTER_"
+  if name == "TECH_BLOCKER" or name:sub(1, #start) == start then
     return false
   end
   if IsAPTech(name) then
@@ -831,8 +833,18 @@ end
 --	Now its own function so Mods / Expansions can modify the nodes
 -- ===========================================================================
 function PopulateNode(uiNode, playerTechData, statusOverride)
+  local boostsAsChecks = Game.GetProperty("BoostsAsChecks") or false
 	local item		:table = g_kItemDefaults[uiNode.Type];						-- static item data
 	local live		:table = playerTechData[DATA_FIELD_LIVEDATA][uiNode.Type];	-- live (changing) data
+
+  if boostsAsChecks and not SHOW_ARCHIPELAGO_TREE then
+    local key = "BOOSTER_" .. uiNode.Type
+    local liveBooster = playerTechData[DATA_FIELD_LIVEDATA][key]
+    if liveBooster ~= nil then
+      live.IsBoosted = liveBooster.IsBoosted
+    end
+  end
+
   live.Status = statusOverride or live.Status
 	local status	:number = live.IsRevealed and live.Status or ITEM_STATUS.UNREVEALED;
   if statusOverride then
@@ -900,7 +912,7 @@ function PopulateNode(uiNode, playerTechData, statusOverride)
 		uiNode.Turns:SetHide( true );
 	end
 
-	if item.IsBoostable and status ~= ITEM_STATUS.RESEARCHED and status ~= ITEM_STATUS.UNREVEALED then
+	if item.IsBoostable and (status ~= ITEM_STATUS.RESEARCHED or boostsAsChecks) and status ~= ITEM_STATUS.UNREVEALED then
 		uiNode.BoostIcon:SetHide( false );
 		uiNode.BoostText:SetHide( false );
 		uiNode.BoostText:SetColor( artInfo.TextColor0, 0 );
@@ -1159,7 +1171,7 @@ function GetCurrentData( ePlayer:number, eCompletedTech:number )
 
 	-- Loop through all items and place in appropriate buckets as well
 	-- read in the associated information for it.
-	for type,item in pairs(g_kItemDefaults) do
+	for type,item in pairs(g_kItemDefaultsAll) do
     -- AP:
 		local techID	:number = GameInfo.Technologies[item.Type].Index;
 		local status	:number = ITEM_STATUS.BLOCKED;
@@ -1450,8 +1462,8 @@ function PopulateItemData()
 			return 0;
 		end
 	end
+  local boostsAsChecks = Game.GetProperty("BoostsAsChecks") or false
 	for row in GameInfo.Technologies() do
-    if ShouldShowTech(row.TechnologyType) then
 
       local kEntry:table	= {};
       kEntry.Type			= row.TechnologyType;
@@ -1476,7 +1488,11 @@ function PopulateItemData()
 
         -- Boost?
         for boostRow in GameInfo.Boosts() do
-          if boostRow.TechnologyType == kEntry.Type then
+          key = kEntry.Type
+          if boostsAsChecks then
+            key = "BOOSTER_" .. kEntry.Type
+          end
+          if boostRow.TechnologyType == key then
             kEntry.BoostText = Locale.Lookup( boostRow.TriggerDescription );
             kEntry.IsBoostable = true;
             kEntry.BoostAmount = boostRow.Boost;
@@ -1502,9 +1518,11 @@ function PopulateItemData()
 
         AddTechToEra( kEntry );
 
+      if ShouldShowTech(row.TechnologyType) then
         -- Save entry into master list.
         kItemDefaults[kEntry.Type] = kEntry;
       end
+      g_kItemDefaultsAll[kEntry.Type] = kEntry;
     end
 	end
 

@@ -214,17 +214,11 @@
     <Row Technology="BOOSTER_TECH_FUTURE_TECH" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_SEASTEADS" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_SEASTEADS" PrereqTech="TECH_BLOCKER" />
-    <Row Technology="BOOSTER_TECH_ADVANCED_AI" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_ADVANCED_AI" PrereqTech="TECH_BLOCKER" />
-    <Row Technology="BOOSTER_TECH_ADVANCED_POWER_CELLS" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_ADVANCED_POWER_CELLS" PrereqTech="TECH_BLOCKER" />
-    <Row Technology="BOOSTER_TECH_CYBERNETICS" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_CYBERNETICS" PrereqTech="TECH_BLOCKER" />
-    <Row Technology="BOOSTER_TECH_SMART_MATERIALS" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_SMART_MATERIALS" PrereqTech="TECH_BLOCKER" />
-    <Row Technology="BOOSTER_TECH_PREDICTIVE_SYSTEMS" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_PREDICTIVE_SYSTEMS" PrereqTech="TECH_BLOCKER" />
-    <Row Technology="BOOSTER_TECH_OFFWORLD_MISSION" PrereqTech="TECH_ROBOTICS" />
     <Row Technology="BOOSTER_TECH_OFFWORLD_MISSION" PrereqTech="TECH_BLOCKER" />
 
   </TechnologyPrereqs>

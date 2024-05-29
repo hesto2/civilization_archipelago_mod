@@ -92,7 +92,8 @@ STATUS_ART[ITEM_STATUS.UNREVEALED]		= { Name="UNREVEALED",	TextColor0=UI.GetColo
 STATUS_ART_LARGE[ITEM_STATUS.UNREVEALED]= { Name="UNREVEALED",	TextColor0=UI.GetColorValueFromHexLiteral(0xff202726), TextColor1=UI.GetColorValueFromHexLiteral(0x00000000), FillTexture="CivicsTree_GearButton2Tile_Disabled.dds",	BGU=0,BGV=(SIZE_NODE_LARGE_Y*3),HideIcon=true,  IsButton=false,	BoltOn=false,	IconBacking=PIC_METER_BACK  };
 
 g_kEras					= {};		-- type to costs
-g_kItemDefaults			= {};		-- Static data about items
+g_kItemDefaults			= {};		-- Static data about item
+g_kItemDefaultsAll    = {};				-- Static data about items (including those not shown)s
 g_uiNodes				= {};
 g_uiConnectorSets		= {};
 SHOW_ARCHIPELAGO_TREE = true
@@ -201,7 +202,8 @@ function IsAPCivic(name)
 end
 
 function ShouldShowCivic(name)
-    if name == "CIVIC_BLOCKER" then
+  local start = "BOOSTER_"
+  if name == "CIVIC_BLOCKER" or name:sub(1, #start) == start then
         return false
     end
     if IsAPCivic(name) then
@@ -936,10 +938,19 @@ end
 --	Now its own function so Mods / Expansions can modify the nodes
 -- ===========================================================================
 function PopulateNode(uiNode, playerTechData)
-
+  local boostsAsChecks = Game.GetProperty("BoostsAsChecks") or false
 	local item		:table = g_kItemDefaults[uiNode.Type];						-- static item data
 	local live		:table = playerTechData[DATA_FIELD_LIVEDATA][uiNode.Type];	-- live (changing) data
 	local status	:number = live.IsRevealed and live.Status or ITEM_STATUS.UNREVEALED;
+
+  if boostsAsChecks and not SHOW_ARCHIPELAGO_TREE then
+    local key = "BOOSTER_" .. uiNode.Type
+      local liveBooster = playerTechData[DATA_FIELD_LIVEDATA][key]
+    if liveBooster ~= nil then
+        live.IsBoosted = liveBooster.IsBoosted
+    end
+  end
+
 
 	-- Check if a node just changed status to reveled and needs to be reallocated to a different shape.
 	if (status ~= ITEM_STATUS.UNREVEALED) and item.wasForcedSmall then
@@ -1006,7 +1017,7 @@ function PopulateNode(uiNode, playerTechData)
 		uiNode.Turns:SetHide( true );
 	end
 
-	if item.IsBoostable and status ~= ITEM_STATUS.RESEARCHED and status ~= ITEM_STATUS.UNREVEALED then
+	if item.IsBoostable and (status ~= ITEM_STATUS.RESEARCHED or boostsAsChecks) and status ~= ITEM_STATUS.UNREVEALED then
 		uiNode.BoostIcon:SetHide( false );
 		uiNode.BoostText:SetHide( false );
 		uiNode.BoostText:SetColor( artInfo.TextColor0, 0 );
@@ -1319,7 +1330,7 @@ function GetCurrentData( ePlayer:number )
 
 	-- Loop through all items and place in appropriate buckets as well
 	-- read in the associated information for it.
-	for type,item in pairs(g_kItemDefaults) do
+	for type,item in pairs(g_kItemDefaultsAll) do
 		local civicID	:number = GameInfo.Civics[item.Type].Index;
 		local status	:number = ITEM_STATUS.BLOCKED;
 		local turnsLeft	:number = 0;
@@ -1627,12 +1638,12 @@ function PopulateItemData() -- Note that we are overriding this function without
 			return 0;
 		end
 	end
+  local boostsAsChecks = Game.GetProperty("BoostsAsChecks") or false
 
 	local tCivicModCache:table = TechAndCivicSupport_BuildCivicModifierCache();
 
 	local civicNodes:table = UITree.GetAvailableCivics();
 	for row in GameInfo.Civics() do
-    if ShouldShowCivic(row.CivicType) then
 
       local kEntry:table	= {};
       kEntry.Type			= row.CivicType;
@@ -1659,7 +1670,11 @@ function PopulateItemData() -- Note that we are overriding this function without
 
         -- Boost?
         for boostRow in GameInfo.Boosts() do
-          if boostRow.CivicType == kEntry.Type then
+          key = kEntry.Type
+          if boostsAsChecks then
+              key = "BOOSTER_" .. kEntry.Type
+          end
+          if boostRow.CivicType == key then
             kEntry.BoostText = Locale.Lookup( boostRow.TriggerDescription );
             kEntry.IsBoostable = true;
             kEntry.BoostAmount = boostRow.Boost;
@@ -1686,9 +1701,13 @@ function PopulateItemData() -- Note that we are overriding this function without
 
         AddCivicToEra( kEntry );
 
+        if ShouldShowCivic(row.CivicType) then
         -- Save entry into master list.
         kItemDefaults[kEntry.Type] = kEntry;
-      end
+        end
+
+        g_kItemDefaultsAll[kEntry.Type] = kEntry;
+
     end
 	end
 
