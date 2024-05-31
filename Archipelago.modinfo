@@ -20,7 +20,6 @@
     <File>DeathLinkHandlers.lua</File>
     <File>UIHandlers.lua</File>
     <File>GoodyHutOverride.sql</File>
-    <File>BoostChecks.xml</File>
     <File>UpdateExistingBoosts.sql</File>
 
     <!-- Replacers -->
@@ -74,12 +73,6 @@
         <LoadOrder>100000</LoadOrder>
       </Properties>
       <File>GoodyHutOverride.sql</File>
-    </UpdateDatabase>
-    <UpdateDatabase id="ArchipelagoBoostChecks">
-      <Properties>
-        <LoadOrder>100001</LoadOrder>
-      </Properties>
-      <File>BoostChecks.xml</File>
     </UpdateDatabase>
     <UpdateDatabase id="ArchipelagoUpdateExistingBoosts">
       <Properties>
