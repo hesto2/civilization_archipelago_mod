@@ -2,3 +2,4 @@ NewItems.xml
 InitOptions.lua
 archipelago.json
 GoodyHutOverride.sql
+UpdateExistingBoosts.sql

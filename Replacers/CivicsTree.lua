@@ -1008,7 +1008,7 @@ function PopulateNode(uiNode, playerTechData)
 		uiNode.NodeName:SetText( Locale.ToUpper( techName ));				-- Normal output
 	end
 
-	if live.Turns > 0 then
+	if live.Turns > 0 and SHOW_ARCHIPELAGO_TREE then
 		uiNode.Turns:SetHide( false );
 		uiNode.Turns:SetColor( artInfo.TextColor0, 0 );
 		uiNode.Turns:SetColor( artInfo.TextColor1, 1 );
@@ -1133,10 +1133,21 @@ function PopulateNode(uiNode, playerTechData)
 
 	-- Show/Hide Recommended Icon
   AdvisorType = GameInfo.Civics[item.Type].AdvisorType
-	if AdvisorType == "ADVISOR_PROGRESSIVE" and live.Status ~= ITEM_STATUS.RESEARCHED then
+  if not SHOW_ARCHIPELAGO_TREE and boostsAsChecks then
+    tech = GameInfo.Civics["BOOST_" .. item.Type]
+    if tech ~= nil then
+        AdvisorType = tech.AdvisorType
+    end
+end
+
+	if ((live.Status ~= ITEM_STATUS.RESEARCHED and SHOW_ARCHIPELAGO_TREE) or (SHOW_ARCHIPELAGO_TREE == false and not live.IsBoosted)) and AdvisorType == "ADVISOR_PROGRESSIVE" then
 		uiNode.RecommendedIcon:SetIcon("ADVISOR_GENERIC");
 		uiNode.RecommendedIcon:SetHide(false);
-    uiNode.RecommendedIcon:SetToolTipString("This is a progression item!");
+    if SHOW_ARCHIPELAGO_TREE then
+      uiNode.RecommendedIcon:SetToolTipString("This is a progression item!")
+    else
+      uiNode.RecommendedIcon:SetToolTipString("Boosting this will unlock a progression item!")
+    end
 	else
 		uiNode.RecommendedIcon:SetHide(true);
 	end
