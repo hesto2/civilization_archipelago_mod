@@ -15,6 +15,9 @@ local m_isOnQueue				:boolean = false;
 
 -- ===========================================================================
 function ShowBoost(queueEntry:table)
+  if Game.GetProperty("BoostsAsChecks") ~= true then
+    return
+  end
 	if queueEntry.techIndex ~= nil then
 		ShowTechBoost(queueEntry.techIndex, queueEntry.iTechProgress, queueEntry.eSource);
 	else
@@ -63,12 +66,11 @@ function ShowTechBoost(techIndex, iTechProgress, eSource)
 
 	-- Update Icon
   key = currentTech.TechnologyType;
-  start = "BOOSTER_"
+  start = "BOOST_"
   if string.sub(key, 1, string.len(start)) == start then
     key = string.sub(key, string.len(start) + 1)
   end
 	local iconName:string = "ICON_" .. key;
-  print(iconName, key)
 	local textureOffsetX, textureOffsetY, textureSheet = IconManager:FindIconAtlas(iconName,38);
 	if (textureOffsetX ~= nil) then
 		Controls.BoostIcon:SetTexture( textureOffsetX, textureOffsetY, textureSheet );
@@ -130,6 +132,7 @@ function ShowTechBoost(techIndex, iTechProgress, eSource)
 		endPercent = totalProgress / totalTechCost;
 		Controls.BoostDescString:SetText(Locale.Lookup("LOC_TECH_BOOST_ADVANCED", techName));
 	end
+  Controls.BoostDescString:SetText("By boosting " .. Locale.Lookup("LOC_" .. key .. "_NAME") .. " your people have discovered " .. techName .. "!")
 
 	Controls.ProgressBar:SetAnimationSpeed(.5);
 	Controls.ProgressBar:SetPercent(endPercent);
@@ -175,7 +178,7 @@ function ShowCivicBoost(civicIndex, iCivicProgress, eSource)
 
 	-- Update Icon
   key = currentCivic.CivicType;
-  start = "BOOSTER_"
+  start = "BOOST_"
   if string.sub(key, 1, string.len(start)) == start then
     key = string.sub(key, string.len(start) + 1)
   end
@@ -238,6 +241,9 @@ function ShowCivicBoost(civicIndex, iCivicProgress, eSource)
 		endPercent = totalProgress / totalCivicCost;
 		Controls.BoostDescString:SetText(Locale.Lookup("LOC_CIVIC_BOOST_ADVANCED", civicString));
 	end
+
+  Controls.BoostDescString:SetText("By boosting " .. Locale.Lookup("LOC_" .. key .. "_NAME") .. " your people have discovered " .. civicName .. "!")
+
 
 	Controls.ProgressBar:SetAnimationSpeed(.5);
 	Controls.ProgressBar:SetPercent(endPercent);
@@ -422,4 +428,3 @@ function Initialize()
 	Events.UIIdle.Add( OnUIIdle );
 end
 Initialize();
-print('tits')

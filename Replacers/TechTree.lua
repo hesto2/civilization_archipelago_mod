@@ -201,7 +201,7 @@ function IsAPTech(name)
 end
 
 function ShouldShowTech(name)
-  local start = "BOOSTER_"
+  local start = "BOOST_"
   if name == "TECH_BLOCKER" or name:sub(1, #start) == start then
     return false
   end
@@ -838,7 +838,7 @@ function PopulateNode(uiNode, playerTechData, statusOverride)
 	local live		:table = playerTechData[DATA_FIELD_LIVEDATA][uiNode.Type];	-- live (changing) data
 
   if boostsAsChecks and not SHOW_ARCHIPELAGO_TREE then
-    local key = "BOOSTER_" .. uiNode.Type
+    local key = "BOOST_" .. uiNode.Type
     local liveBooster = playerTechData[DATA_FIELD_LIVEDATA][key]
     if liveBooster ~= nil then
       live.IsBoosted = liveBooster.IsBoosted
@@ -1490,7 +1490,7 @@ function PopulateItemData()
         for boostRow in GameInfo.Boosts() do
           key = kEntry.Type
           if boostsAsChecks then
-            key = "BOOSTER_" .. kEntry.Type
+            key = "BOOST_" .. kEntry.Type
           end
           if boostRow.TechnologyType == key then
             kEntry.BoostText = Locale.Lookup( boostRow.TriggerDescription );
