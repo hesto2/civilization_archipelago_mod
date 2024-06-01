@@ -283,7 +283,7 @@
         <Image ID="BoostIcon" Offset="9,7" Anchor="L,B" Texture="BoostTech" />
         <Label ID="BoostText" Offset="47,7" Anchor="L,B" Style="TreeBoostText" String="?BoostText" />
         <Stack Offset="68,8" StackGrowth="Right" StackPadding="4">
-          <Label ID="NodeName" Style="TreeNodeText" String="?NodeName" TruncateWidth="340" />
+          <Label ID="NodeName" Style="FontNormal14" String="?NodeName" TruncateWidth="340" />
           <Image ID="RecommendedIcon" Offset="0,-8" Size="22,22" Texture="AdvisorRec22"
             ConsumeMouse="1" ToolTip="LOC_TECH_FILTER_RECOMMENDED">
             <FlipAnim Texture="AdvisorRecAnim22" Size="26,26" Anchor="C,C" FrameCount="12"
