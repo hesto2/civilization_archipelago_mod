@@ -42,16 +42,16 @@ function OnTurnBegin()
     unsent_goodies = GetUnsentGoodies()
     if #unsent_goodies > 0 then
         print("Handling unsent goodies")
-        for key, id in pairs(unsent_goodies) do
-            city = HUMAN_PLAYER:GetCities():GetCapitalCity()
-            if city then
+        city = HUMAN_PLAYER:GetCities():GetCapitalCity()
+        if city then
+            for key, id in pairs(unsent_goodies) do
                 print("Attaching modifier to city", id)
                 city:AttachModifierByID(id)
             end
+
+            Game.SetProperty("UnsentGoodies", {})
         end
     end
-    Game.SetProperty("UnsentGoodies", {})
-
 end
 
 function NotifyReceivedItem(item, index)
