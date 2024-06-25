@@ -1836,7 +1836,10 @@ end
 function OnClickToggleArchipelagoTree()
     if SHOW_ARCHIPELAGO_TREE then
         SHOW_ARCHIPELAGO_TREE = false;
+        print(Controls.ToggleText:GetText())
+        Controls.ToggleText:SetText("CLICK AN UNLOCKED TECHNOLOGY TO TOGGLE IT ON/OFF")
     else
+        Controls.ToggleText:SetText("")
         SHOW_ARCHIPELAGO_TREE = true;
     end
     OnInit(true)

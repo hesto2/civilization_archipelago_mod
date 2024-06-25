@@ -3,6 +3,7 @@
 
 	<Container ID="Vignette" Style="FullScreenVignetteConsumer"/>
 	<AlphaAnim ID="SearchResultsTimer" Begin="0" End="1" Speed="2" Cycle="Once" Stopped="1"/>
+  <Label ID="ToggleText" Style="TutorialHeaderText" String="" Size="full,768" Offset="0,100"/>
 
   <Container Anchor="C,C" Size="full,768">
     <Box Color="7,30,50,255" Anchor="L,B" Size="parent,5"/>
@@ -128,48 +129,6 @@
     <GridButton ID="ToggleTreeButton" Offset="0,74" Size="194,26" TextOffset="32,6" String="Toggle Archipelago Tree" Style="TreeOptionText">
       <GridData Texture="Controls_CheckButton2" StateOffsetIncrement="0,26" SliceCorner="30,14" SliceSize="1,1" SliceTextureSize="41,26"/>
     </GridButton>
-
-    <!-- <Grid ID="KeyPanel" ConsumeAllMouse="1" Anchor="L,B" AnchorSide="I,O" Offset="0,2" Size="195,510" Texture="Controls_PanelBlue" SliceCorner="25,28" SliceSize="33,18" SliceTextureSize="83,75">
-      <Line Start="20,16" End="174,16" Color="55,95,126,255" Width="2"/>
-      <Label Anchor="C,T" Offset="0,20" Style="FontFlair16" SmallCaps="20" String="LOC_TREE_KEY" Color0="78,119,151,255" Color1="0,0,0,0" Color2="25,65,96,255"/>
-      <Line Start="20,40" End="174,40" Color="55,95,126,255" Width="2"/>
-      <Grid Offset="10,50" Size="156,30" Texture="TechTree_KeyNormal" SliceCorner="38,3" SliceSize="4,24" SliceTextureSize="156,30">
-        <Label ID="AvailableLabelKey" Offset="40,10" Style="TreeNodeText" String="LOC_TECH_KEY_AVAILABLE"/>
-      </Grid>
-      <Grid Offset="10,80" Size="156,30" Texture="TechTree_KeyDisabled" SliceCorner="38,3" SliceSize="4,24" SliceTextureSize="156,30">
-        <Label ID="UnavailableLabelKey" Offset="40,10" Style="TreeNodeText" String="LOC_TECH_KEY_UNAVAILABLE"/>
-      </Grid>
-      <Grid Offset="10,110" Size="156,30" Texture="TechTree_KeySelected" SliceCorner="38,3" SliceSize="4,24" SliceTextureSize="156,30">
-        <Label ID="ResearchingLabelKey" Offset="40,10" Style="TreeNodeText" String="LOC_TECH_KEY_RESEARCHING"/>
-      </Grid>
-      <Grid Offset="10,140" Size="156,30" Texture="TechTree_KeyCompleted" SliceCorner="38,3" SliceSize="4,24" SliceTextureSize="156,30">
-        <Label ID="CompletedLabelKey" Offset="40,10" Style="TreeNodeText" String="LOC_TECH_KEY_COMPLETED"/>
-      </Grid>
-      <Image ID="UnitKey" Texture="UnlockFrames" Size="38,38" Offset="10,170" TextureOffset="152,0">
-        <Label ID="UnitLabelKey" Offset="40,14" Style="TreeNodeText" String="LOC_CIVICS_KEY_UNIT"/>
-      </Image>
-      <Image ID="BuildingKey" Texture="UnlockFrames" Size="38,38" Offset="10,210" TextureOffset="38,0">
-        <Label ID="BuildingLabelKey" Offset="40,14" Style="TreeNodeText" String="LOC_CIVICS_KEY_BUILDING"/>
-      </Image>
-	  <Image ID="WonderKey" Texture="UnlockFrames" Size="38,38" Offset="10,250">
-        <Label ID="WonderLabelKey" Offset="40,14" Style="TreeNodeText" String="LOC_CIVICS_KEY_WONDER"/>
-      </Image>
-      <Image ID="AgreementKey" Texture="UnlockFrames" Size="38,38" Offset="10,290" TextureOffset="304,0">
-        <Label ID="AgreementLabelKey" Offset="40,14" Style="TreeNodeText" String="LOC_CIVICS_KEY_AGREEMENT"/>
-      </Image>
-      <Image ID="ImprovementKey" Texture="UnlockFrames" Size="38,38" Offset="10,330" TextureOffset="114,0">
-        <Label ID="ImprovementLabelKey" Offset="40,14" Style="TreeNodeText" String="LOC_IMPROVEMENT_NAME"/>
-      </Image>
-	  <Image ID="ResourceKey" Texture="UnlockFrames" Size="38,38" Offset="10,370" TextureOffset="190,0">
-        <Label ID="ResourceLabelKey" Offset="40,14" Style="TreeNodeText" String="LOC_RESOURCE_NAME"/>
-      </Image>
-      <Image ID="DistrictKey" Texture="UnlockFrames" Size="38,38" Offset="10,410" TextureOffset="76,0">
-        <Label ID="DistrictLabelKey" Offset="40,14" Style="TreeNodeText" String="LOC_CIVICS_KEY_DISTRICT"/>
-      </Image>
-      <Image  ID="UnlockKey" Texture="UnlockFrames"  Size ="38,38" Offset="10,450" TextureOffset="494,0">
-        <Label ID="UnlockLabelKey" Offset="40,14" Style="TreeNodeText"  String="LOC_CIVICS_KEY_UNLOCK"/>
-      </Image>
-    </Grid> -->
 
     <Container ID="SearchResultsPanelContainer" Anchor="L,T" Offset="0,75" Size="193,auto" Hidden="1">
       <ScrollPanel ID="SearchResultsPanel" Size="parent,600" Vertical="1" AutoScrollBar="1">
